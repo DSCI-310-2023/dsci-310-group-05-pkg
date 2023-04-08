@@ -108,12 +108,20 @@ scatterplot <- function(data, x_var, y_var, color_var, x_label, y_label,
 #'   y_label = "Accuracy Estimate", plot_title = "Neighbors vs. Accuracy"
 #' )
 #'
-#' @import tidyverse ggplot2
+#' @import tidyverse ggplot2 tidymodels
 #' @export
 
 accuracy_plot <- function(workflow_data, x_label, y_label, plot_title) {
   options(repr.plot.width = 12, repr.plot.width = 12)
-  accuracy <- filter(workflow_data, .metric == "accuracy")
+
+   names_list <- names(workflow_data)
+
+  if (any(sapply(names_list, function(name) grepl("\\.", name)))) {
+    accuracy <- filter(workflow_data, .metric == "accuracy")
+  } else {
+    accuracy <- filter(workflow_data, metric == "accuracy")
+  }
+   #accuracy <- filter(workflow_data, .metric == "accuracy")
 
   acc_plot <- ggplot(accuracy, aes(x = neighbors, y = mean)) +
     geom_point() +

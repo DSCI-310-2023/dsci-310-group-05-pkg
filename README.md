@@ -9,7 +9,7 @@
 The goal of group05pkg is to aid in creating a classification analysis
 project end to end. It has functions that read in the data, clean the
 data, plot the data, and train/test classification models on the data.
-It also contains functions that can test the model’s accuracy
+It also contains functions that can test the model’s accuracy.
 
 ## Installation
 

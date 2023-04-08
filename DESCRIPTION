@@ -17,6 +17,9 @@ Imports:
     rsample,
     ggplot2,
     tidyverse,
+    parsnip,
+    recipes,
+    tibble
     dplyr, 
     tidymodels,
     magrittr,

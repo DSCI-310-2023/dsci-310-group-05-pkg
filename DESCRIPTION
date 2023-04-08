@@ -19,7 +19,7 @@ Imports:
     tidyverse,
     parsnip,
     recipes,
-    tibble
+    tibble,
     dplyr, 
     tidymodels,
     magrittr,

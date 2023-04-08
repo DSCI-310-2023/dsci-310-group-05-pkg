@@ -14,7 +14,9 @@ RoxygenNote: 7.2.3
 Imports:
     rsample,
     ggplot2,
-    tidyverse
+    tidyverse,
+    magrittr,
+    dplyr
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

@@ -19,7 +19,7 @@ Imports:
     tidyverse,
     parsnip,
     recipes,
-    tibble
+    tibble,
     dplyr, 
     tidymodels,
     magrittr,
@@ -27,7 +27,7 @@ Imports:
     parsnip,
     recipes,
     tibble
-
 Suggests: 
+    covr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

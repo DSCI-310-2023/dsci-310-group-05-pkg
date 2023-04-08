@@ -5,6 +5,8 @@ Authors@R:
     c(person("Angela", "Machado", email = "angelalopesmachado@gmail.com", 
            role = c("aut", "cre")), 
     person("Dalia", "Ahmad", email = "ahmaddalia708@gmail.com", 
+           role = c("aut")),
+    person("Ece", "Celik", email = "ece01celik@gmail.com", 
            role = c("aut")))
 Description: This package further abstracts the functions used by group 5
              in their analysis. It contains data loading, cleaning and wrangling
@@ -22,11 +24,7 @@ Imports:
     tibble,
     dplyr, 
     tidymodels,
-    magrittr,
-    dplyr,
-    parsnip,
-    recipes,
-    tibble
+    magrittr
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

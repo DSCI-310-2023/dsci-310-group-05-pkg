@@ -2,11 +2,6 @@
 
 # Test case 1
 test_that("create_grid creates a grid with the correct number of neighbors", {
-  min_neighbors <- 5
-  max_neighbors <- 10
-  test_grid <- tibble::tibble(neighbors = seq(min_neighbors, max_neighbors))
-
-  expected_num_rows_grid <- max_neighbors - min_neighbors + 1
   expect_equal(nrow(test_grid), expected_num_rows_grid)
 })
 

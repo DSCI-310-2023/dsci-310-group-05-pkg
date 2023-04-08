@@ -2,44 +2,16 @@
 
 # Test case 1
 test_that("create_knn_spec sets the mode to classification", {
-  test_spec <- parsnip::nearest_neighbor(
-    weight_func = "rectangular",
-    neighbors = tune()
-  ) %>%
-    parsnip::set_engine("kknn") %>%
-    parsnip::set_mode("classification")
-
-  expected_mode <- "classification"
-
-  spec <- create_knn_spec(weight_func = "rectangular")
   expect_equal(test_spec$mode, expected_mode)
 })
 
 # Test case 2
 test_that("create_knn_spec sets the engine to kknn", {
-  test_spec <- parsnip::nearest_neighbor(
-    weight_func = "rectangular",
-    neighbors = tune()
-  ) %>%
-    parsnip::set_engine("kknn") %>%
-    parsnip::set_mode("classification")
-
-  expected_engine <- "kknn"
-
   expect_equal(test_spec$engine, expected_engine)
 })
 
 # Test case 3
 test_that("create_knn_spec returns a model specification object", {
-  test_spec <- parsnip::nearest_neighbor(
-    weight_func = "rectangular",
-    neighbors = tune()
-  ) %>%
-    parsnip::set_engine("kknn") %>%
-    parsnip::set_mode("classification")
-
-  expected_spec_class <- "model_spec"
-
   expect_s3_class(test_spec, expected_spec_class)
 })
 

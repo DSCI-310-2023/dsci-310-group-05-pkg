@@ -17,7 +17,8 @@ Imports:
     rsample,
     ggplot2,
     tidyverse,
-
+    dplyr, 
+    tidymodels,
     magrittr,
     dplyr,
     parsnip,

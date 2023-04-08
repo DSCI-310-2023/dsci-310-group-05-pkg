@@ -12,6 +12,7 @@ test_that("split_dataset function returns a list with two data frames", {
   strata_variable <- "y"
   predictor <- "x"
 
+  # Call the function
   actual_split <- split_dataset(data_set, all_of(strata_variable), all_of(predictor))
 
   # Test that the function returns a list with two data frames
@@ -39,6 +40,8 @@ test_that("split_dataset function splits data set into training and testing
   split <- initial_split(data_set, prop = 0.75, strata = all_of(strata_variable))
   expected_training_data <- training(split)
   expected_testing_data <- testing(split)
+
+  # Call the function
   actual_split <- split_dataset(data_set, all_of(strata_variable), all_of(predictor))
 
   # Test that the training set has the expected number of observations

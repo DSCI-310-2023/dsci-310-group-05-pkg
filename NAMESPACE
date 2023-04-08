@@ -3,6 +3,7 @@
 export(accuracy_plot)
 export(create_knn_spec)
 export(create_recipe)
+export(create_vfold)
 export(horizontal_hist)
 export(scatterplot)
 export(split_dataset)

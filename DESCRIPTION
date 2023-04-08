@@ -17,9 +17,13 @@ Imports:
     rsample,
     ggplot2,
     tidyverse,
+
+    magrittr,
+    dplyr,
     parsnip,
     recipes,
     tibble
+
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

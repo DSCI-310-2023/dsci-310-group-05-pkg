@@ -2,8 +2,10 @@ Package: group05pkg
 Title: Increasign reproducibility of group 5's DSCI 310 project
 Version: 0.0.0.9000
 Authors@R: 
-    person("Angela", "Machado", , "angelalopesmachado@gmail.com",
-    role = c("aut", "cre"))
+    c(person("Angela", "Machado", email = "angelalopesmachado@gmail.com", 
+           role = c("aut", "cre")), 
+    person("Dalia", "Ahmad", email = "ahmaddalia708@gmail.com", 
+           role = c("aut")))
 Description: This package further abstracts the functions used by group 5
              in their analysis. It contains data loading, cleaning and wrangling
              as well as functions for a KNN algorithm prediction.
@@ -15,8 +17,13 @@ Imports:
     rsample,
     ggplot2,
     tidyverse,
+
     magrittr,
-    dplyr
+    dplyr,
+    parsnip,
+    recipes,
+    tibble
+
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

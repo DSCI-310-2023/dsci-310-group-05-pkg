@@ -9,8 +9,9 @@ training_data <- data.frame(
 predictor <- "predictor"
 strata_variable <- "strata_variable"
 group_labels <- c("Group 1")
+error<- "error"
 
 output <- training_data %>%
-  dplyr::group_by({{ predictor }}, {{ strata_variable }}) %>%
-  dplyr::summarize(n = n()) %>%
+  dplyr::group_by(predictor, strata_variable) %>%
+  dplyr::summarize(n = dplyr::n()) %>%
   dplyr::mutate(label = group_labels)

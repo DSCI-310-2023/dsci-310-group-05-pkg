@@ -22,11 +22,7 @@ Imports:
     tibble,
     dplyr, 
     tidymodels,
-    magrittr,
-    dplyr,
-    parsnip,
-    recipes,
-    tibble
+    magrittr
 Suggests: 
     covr,
     testthat (>= 3.0.0)

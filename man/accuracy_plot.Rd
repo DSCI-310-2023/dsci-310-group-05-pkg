@@ -25,9 +25,6 @@ one of them being the accuracy
 naming the axes and the plot with the given labels,
 }
 \examples{
-accuracy_plot(data_set,
-  x_label = "Number of Neighbors",
-  y_label = "Accuracy Estimate", plot_title = "Neighbors vs. Accuracy"
-)
+accuracy_plot(workflow_data, "Neighbors", "Accuracy", "Accuracy Plot for mtcars Dataset")
 
 }

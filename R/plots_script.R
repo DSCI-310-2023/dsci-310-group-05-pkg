@@ -57,7 +57,7 @@ horizontal_hist <- function(data, x_var, y_var, x_label, y_label, plot_title,
 #' points in the plot
 #' @param x_label Name given to the x axis
 #' @param y_label Name given to the y axis
-#' @param color_Label Name gioven to the color legend
+#' @param color_label Name gioven to the color legend
 #' @param plot_title Name given to the entire graph
 #' @param plot_width Width of the plot
 #' @param plot_height Height of the plot
@@ -103,25 +103,21 @@ scatterplot <- function(data, x_var, y_var, color_var, x_label, y_label,
 #' @return a visualization of the accuracy of the estimates with respect to
 #' the number of neighbors
 #'
-#' @examples accuracy_plot(data_set,
-#'   x_label = "Number of Neighbors",
-#'   y_label = "Accuracy Estimate", plot_title = "Neighbors vs. Accuracy"
-#' )
+#' @examples accuracy_plot(workflow_data, "Neighbors", "Accuracy", "Accuracy Plot for mtcars Dataset")
 #'
-#' @import tidyverse ggplot2 tidymodels
+#' @import tidyverse ggplot2 tidymodels dplyr recipes rsample tune magrittr kknn
 #' @export
 
 accuracy_plot <- function(workflow_data, x_label, y_label, plot_title) {
   options(repr.plot.width = 12, repr.plot.width = 12)
 
-   names_list <- names(workflow_data)
+  names_list <- names(workflow_data)
 
-  if (any(sapply(names_list, function(name) grepl("\\.", name)))) {
-    accuracy <- filter(workflow_data, .metric == "accuracy")
+  if (".metric" %in% names_list) {
+    accuracy <- dplyr::filter(workflow_data, .metric == "accuracy")
   } else {
-    accuracy <- filter(workflow_data, metric == "accuracy")
+    accuracy <- dplyr::filter(workflow_data, metric == "accuracy")
   }
-   #accuracy <- filter(workflow_data, .metric == "accuracy")
 
   acc_plot <- ggplot(accuracy, aes(x = neighbors, y = mean)) +
     geom_point() +

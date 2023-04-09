@@ -32,13 +32,13 @@ points in the plot}
 
 \item{y_label}{Name given to the y axis}
 
+\item{color_label}{Name gioven to the color legend}
+
 \item{plot_title}{Name given to the entire graph}
 
 \item{plot_width}{Width of the plot}
 
 \item{plot_height}{Height of the plot}
-
-\item{color_Label}{Name gioven to the color legend}
 }
 \value{
 a visualization of a scatter plot

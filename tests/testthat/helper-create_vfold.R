@@ -7,14 +7,17 @@ df <- data.frame(
   Oscore = c(-0.01928, -1.55521, -0.45174, -0.84732, -0.97631, -1.42424),
   Ascore = c(0.59042, 2.03972, -0.30172, -0.30172, 0.76096, 0.59042),
   Nicotine = c(0, 1, 1, 0, 1, 1),
-  Cannabis = c("no", "no", "no", "no", "no", "no")
+  Cannabis = c("no", "yes", "no", "yes", "no", "yes")
 )
+
 response_var <- "Cannabis"
 test_vfold <- rsample::vfold_cv(df, v = 5, strata = response_var)
+test_vfold_2 <- rsample::vfold_cv(df, v = 2, strata = response_var)
+
 v_good <- 5
 v_small <- 1
 v_string <- "five"
 
 #expected function outputs
-expected_num_splits <- 5
+expected_num_splits <- 3
 expected_vfold_class <- "vfold_cv"

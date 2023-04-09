@@ -117,9 +117,9 @@ accuracy_plot <- function(workflow_data, x_label, y_label, plot_title) {
    names_list <- names(workflow_data)
 
   if (any(sapply(names_list, function(name) grepl("\\.", name)))) {
-    accuracy <- dplyr::filter(workflow_data, .metric == "accuracy")
+    accuracy <- filter(workflow_data, .metric == "accuracy")
   } else {
-    accuracy <- dplyr::filter(workflow_data, metric == "accuracy")
+    accuracy <- filter(workflow_data, metric == "accuracy")
   }
    #accuracy <- filter(workflow_data, .metric == "accuracy")
 

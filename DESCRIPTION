@@ -22,11 +22,9 @@ Imports:
     parsnip,
     recipes,
     tibble,
-    dplyr,
+    dplyr, 
     tidymodels,
-    magrittr,
-    kknn
+    magrittr
 Suggests: 
-    covr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

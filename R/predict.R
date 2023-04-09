@@ -9,7 +9,6 @@
 #' cannabis usage
 #' @return Writes the predicted outcome of cannabis usage for the new data in
 #' the data folder
-#' @import stats
 #' @export
 #'
 #' @examples predict_drugs_workflow(drugs_workflow, drugs_test)

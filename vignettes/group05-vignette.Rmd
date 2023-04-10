@@ -62,3 +62,41 @@ colnames(drug_consumption) <- c(
 )
 head(drug_consumption)
 ```
+
+## Functions
+
+We can break down our functions into 3 different groups: 
+
+- EDA 
+- Visualizations
+- Classification Models
+
+### Classification Models 
+
+#### 1. Create knn specification with `create_knn_spec()`
+
+create_knn_spec() is a function in R that creates a specification object for 
+k-nearest neighbor models. The function takes one argument, weight_func, which
+is a string that specifies the weight function to use in the model.
+
+The function creates a specification object using the nearest_neighbor() function
+from the parsnip package. The weight_func argument is used to set the weight 
+function in the specification object.
+
+The neighbors parameter is set as a tuning parameter using the tune() function. 
+This means that the number of neighbors will be selected based on the best 
+performance during model training.
+
+The specification object is then set to use the kknn engine and set to 
+classification mode. Finally, the function returns the specification object.
+
+To use the create_knn_spec() function, you simply provide a string for the 
+weight_func argument. For example, to create a specification object with a weight 
+function of "triangular", you can use the following code:
+
+```{r create-knn-spec}
+knn_spec <- create_knn_spec("rectangular")
+knn_spec
+```
+#### 2. Create knn specification with `create_recipe()`
+

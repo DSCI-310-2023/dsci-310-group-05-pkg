@@ -9,7 +9,11 @@
 #' @param data A dataframe containing the data.
 #' @param response_var A string specifying the name of the response variable.
 #' @return A recipe object for use in a workflow.
-#' @import recipes stats
+#' @importFrom stats as.formula
+#' @importFrom recipes recipe
+#' @importFrom recipes step_scale
+#' @importFrom recipes step_center
+#' @importFrom recipes all_predictors
 #' @export
 #' @example create_recipe(drug_data, "Cannabis")
 
@@ -28,7 +32,7 @@ create_recipe <- function(data, response_var) {
   }
   recipe <-
     recipes::recipe(stats::as.formula(paste0(response_var, " ~ .")), data = data) %>%
-    recipes::step_scale(all_predictors()) %>%
-    recipes::step_center(all_predictors())
+    recipes::step_scale(recipes::all_predictors()) %>%
+    recipes::step_center(recipes::all_predictors())
   return(recipe)
 }

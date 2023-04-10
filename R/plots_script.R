@@ -25,7 +25,8 @@
 #' horizontal_hist(test_data_1, "x", "y", "x", "y", "Test Plot",
 #' plot_width = 6, plot_height = 4)
 #'
-#' @import tidyverse ggplot2 stats
+#' @import tidyverse ggplot2
+#' @importFrom stats reorder
 #' @export
 
 
@@ -119,7 +120,8 @@ scatterplot <- function(data, x_var, y_var, color_var, x_label, y_label,
 #'
 #' accuracy_plot(test_data_2, "Neighbors", "Accuracy", "Accuracy Plot for Test Data 2")
 #'
-#' @import tidyverse ggplot2 tidymodels dplyr recipes rsample tune magrittr kknn
+#' @import tidyverse ggplot2 tidymodels rsample tune magrittr kknn
+#' @importFrom dplyr filter
 #' @export
 
 accuracy_plot <- function(workflow_data, x_label, y_label, plot_title) {

@@ -9,8 +9,8 @@
 #' @return returns the specification object
 #' @import parsnip
 #' @export
-#' @examples
-#' create_knn_spec("rectangular")
+#' @examples create_knn_spec("rectangular")
+#'
 create_knn_spec <- function(weight_func) {
   if (missing(weight_func)) {
     stop("weight_func must be provided.")

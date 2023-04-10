@@ -14,7 +14,7 @@
 #' strata_variable & add a label column
 #'
 #' @importFrom magrittr %>%
-#' @import dplyr
+#' @importFrom dplyr group_by summarize n
 #'
 #' @export
 #'

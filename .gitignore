@@ -3,3 +3,5 @@
 # History files
 .Rhistory
 .Rapp.history
+_snaps
+inst/doc

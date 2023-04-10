@@ -11,8 +11,8 @@
 #' @return A recipe object for use in a workflow.
 #' @import recipes
 #' @export
-#' @examples
-#' create_recipe(drug_data, "Cannabis")
+#' @example create_recipe(drug_data, "Cannabis")
+
 create_recipe <- function(data, response_var) {
   if (is.null(data)) {
     stop("data must be provided.")

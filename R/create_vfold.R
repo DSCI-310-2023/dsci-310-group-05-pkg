@@ -24,6 +24,6 @@ create_vfold <- function(data, v, strata) {
     stop("v must be greater than or equal to 2.")
   }
   vfold <-
-    rsample::vfold_cv(data, v = v, strata = strata)
+    rsample::vfold_cv(data, v = v, strata = all_of(strata))
   return(vfold)
 }

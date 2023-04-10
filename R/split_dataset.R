@@ -17,7 +17,7 @@
 #' @export
 
 split_dataset <- function(data_set, strata_variable, predictor) {
-  split <- initial_split(data_set, prop = 0.75, strata = strata_variable)
+  split <- initial_split(data_set, prop = 0.75, strata = all_of(strata_variable))
   training_data <- training(split)
   testing_data <- testing(split)
 

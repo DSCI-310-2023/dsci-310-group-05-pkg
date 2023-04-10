@@ -21,6 +21,3 @@ The recipe includes a formula where the response variable is the
 predictors. The recipe object also includes steps for scaling and centering
 the predictor variables.
 }
-\examples{
-create_recipe(drug_data, "Cannabis")
-}

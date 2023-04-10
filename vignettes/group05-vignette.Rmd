@@ -1,5 +1,5 @@
 ---
-title: "group05pkg-vignette"
+title: "Introduction to group05pkg"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{package_name-vignette}
@@ -11,20 +11,42 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  comment = "#>", 
-  warning = FALSE, 
+  comment = "#>",
+  warning = FALSE,
   message = FALSE
 )
-```
-
-```{r setup}
-library(group05pkg)
 ```
 
 ```{r load_all, include=FALSE}
 devtools::load_all(".")
 ```
 
-```{r}
+Data analysis requires a structured approach that involves cleaning, wrangling,
+modeling, and evaluating the performance of different models. However, these 
+tasks can be challenging, and traditional approaches of writing large code chunks
+to run this kind of analysis can be time-consuming and error-prone.
 
+**This is where the package group05pkg comes in!**
+
+It provides a set of easy-to-use functions that simplify the process of running
+a classification analysis such as:
+
+- Split your data set into train and test
+- Create the components of a classification model such as the KNN specification,
+a recipe, cross-validation folds, and a grid of hyperparameters that can be used
+to tune the performance of a model.
+- Evaluate the accuracy of your model. 
+- Plot histograms and scatterplots to visualize your analysis. 
+
+This document introduces you to group05pkg’s basic set of tools, and shows you 
+how to apply them to run a classification analysis.
+
+## Data: iris 
+To explore the package, we will be using the iris data set. This data set contains
+`150 rows` and `5 columns`. To read the iris data set documentation, you can check `?iris`
+
+```{r setup}
+library(group05pkg)
+dim(iris)
+head(iris)
 ```

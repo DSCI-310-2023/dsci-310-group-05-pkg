@@ -4,7 +4,7 @@
 \alias{predict_drugs_workflow}
 \title{Predicts the outcome of a target variable}
 \usage{
-predict_drugs_workflow(knn_wf, test_data = testing_data)
+predict_drugs_workflow(knn_wf, test_data)
 }
 \arguments{
 \item{knn_wf}{A fitted knn workflow object}

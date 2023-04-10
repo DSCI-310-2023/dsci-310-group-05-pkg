@@ -25,7 +25,7 @@
 #' horizontal_hist(test_data_1, "x", "y", "x", "y", "Test Plot",
 #' plot_width = 6, plot_height = 4)
 #'
-#' @import tidyverse ggplot2
+#' @import tidyverse ggplot2 stats
 #' @export
 
 
@@ -34,7 +34,7 @@ horizontal_hist <- function(data, x_var, y_var, x_label, y_label, plot_title,
   options(repr.plot.width = plot_width, repr.plot.height = plot_height)
 
   plot <- ggplot(data, aes(
-    x = reorder({{ x_var }}, {{ y_var }}),
+    x = stats::reorder({{ x_var }}, {{ y_var }}),
     y = {{ y_var }}
   )) +
     geom_bar(stat = "identity") +
@@ -123,6 +123,7 @@ scatterplot <- function(data, x_var, y_var, color_var, x_label, y_label,
 #' @export
 
 accuracy_plot <- function(workflow_data, x_label, y_label, plot_title) {
+  .metric <- metric <- neighbors <- NULL
   options(repr.plot.width = 12, repr.plot.width = 12)
 
   names_list <- names(workflow_data)

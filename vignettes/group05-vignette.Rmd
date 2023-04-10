@@ -42,7 +42,7 @@ This document introduces you to group05pkg’s basic set of tools, and shows you
 how to apply them to run a classification analysis.
 
 ## Data: drug_consumption
-To explore the package, we will be using the `drug_consumption` data set.This data
+To explore the package, we will be using the `drug_consumption` data set. This data
 set has `1884 rows` and `32 columns`.
 
 ```{r setup, include = FALSE}
@@ -110,13 +110,22 @@ We can break down our functions into 3 different groups:
 
 #### 1. Split the dataset into training and testing sets 
 
-The `split_dataset` is a function that splits a dataset into training and test sets. The function takes in a dataset, a strata variable, and a predictor variable as inputs and performs a stratified random split of the dataset into training and testing subsets.
+The `split_dataset` is a function that splits a dataset into training and test 
+sets. The function takes in a dataset, a strata variable, and a predictor variable
+as inputs and performs a stratified random split of the dataset into training and
+testing subsets.
 
-`data_set` argument is a data frame containing the original data that will be split into training and testing sets. `strata_variable` is a string specifying the variable in `data_set` that will be used as a stratification variable for the split. `predictor` is a string that indicates the variable in the `data_set` that is going to be considered as the predictor variable.
+`data_set` argument is a data frame containing the original data that will be 
+split into training and testing sets. `strata_variable` is a string specifying 
+the variable in `data_set` that will be used as a stratification variable for 
+the split. `predictor` is a string that indicates the variable in the `data_set`
+that is going to be considered as the predictor variable.
 
 The function returns a list that contains the training set and testing set. 
 
-For example, we can use `split_dataset()` function by providing `data_set = drug_consumption`, `strata_dariable = "Canabis"` and `predictor = "Nicotine"`. This will split our `drug_consumption` into train and test sets.
+For example, we can use `split_dataset()` function by providing 
+`data_set = drug_consumption`, `strata_dariable = "Canabis"` and `predictor = "Nicotine"`.
+This will split our `drug_consumption` into train and test sets.
 
 ```{r split_dataset}
 split_data <- split_dataset(drug_consumption, "Cannabis", "Nicotine")
@@ -139,11 +148,20 @@ test_data <- mutate(test_data,
 
 #### 2. Clean and wrangle data
 
-The `wrangle_training_data` function takes in a training dataset, a predictor variable, a strata variable, and group labels as inputs, and returns a data frame with 4 columns that are named as "predictor", "strata_variable", "n", and "label". 
+The `wrangle_training_data` function takes in a training dataset, a predictor 
+variable, a strata variable, and group labels as inputs, and returns a data frame
+with 4 columns that are named as "predictor", "strata_variable", "n", and "label". 
 
-The function groups the training data by the predictor and strata variable, summarizes the number of observations in each group, and lastly  adds a label column with group labels that are defined by the user.
+The function groups the training data by the predictor and strata variable, 
+summarizes the number of observations in each group, and lastly  adds a label 
+column with group labels that are defined by the user.
 
-`training_data` argument is a data frame that contains the training data that is going to be wrangled and cleaned. `predictor` argument is a string or that spcifies the variable in the training data that is gonna be used as the predictor variable. `strata_variable` is a string that specifies the variable in the training data to be used as the stratification variable.`group_labels` is a strings to be used as labels for the groups in the resulting data frame.
+`training_data` argument is a data frame that contains the training data that is
+going to be wrangled and cleaned. `predictor` argument is a string or that spcifies
+the variable in the training data that is gonna be used as the predictor variable.
+`strata_variable` is a string that specifies the variable in the training data to
+be used as the stratification variable.`group_labels` is a strings to be used as 
+labels for the groups in the resulting data frame.
 
 
 ```{r wrangle_training_data}
@@ -166,23 +184,23 @@ cannabis_and_nicotine <- wrangle_training_data(
 
 #### 1. Create knn specification with `create_knn_spec()`
 
-create_knn_spec() is a function that creates a specification object for k-nearest
+`create_knn_spec()` is a function that creates a specification object for k-nearest
 neighbor (KNN) models. The function takes one argument, weight_func, which is a 
 string that specifies the weight function to use in the model.
 
 
-The function creates a specification object using the nearest_neighbor() function
-from the parsnip package. The weight_func argument is used to set the weight 
+The function creates a specification object using the `nearest_neighbor()` function
+from the `parsnip` package. The weight_func argument is used to set the weight 
 function in the specification object.
 
-The neighbors parameter is set as a tuning parameter using the tune() function. 
+The neighbors parameter is set as a tuning parameter using the `tune()` function. 
 This means that the number of neighbors will be selected based on the best 
 performance during model training.
 
 The specification object is then set to use the kknn engine and set to 
 classification mode. Finally, the function returns the specification object.
 
-To use the create_knn_spec() function, you simply provide a string for the 
+To use the `create_knn_spec()` function, you simply provide a string for the 
 weight_func argument. For example, to create a specification object with a weight 
 function of "rectangular", you can use the following code:
 
@@ -192,21 +210,21 @@ drugs_knn_spec
 ```
 #### 2. Create knn specification with `create_recipe()`
 
-create_recipe() is a function that creates a recipe object for use in a modeling
+`create_recipe()` is a function that creates a recipe object for use in a modeling
 workflow. The function takes two arguments: data, a dataframe containing the data,
 and response_var, a string that specifies the name of the response variable.
 
-The function creates a recipe object using the recipe() function from the recipes
-package. The as.formula() function is used to create a formula where the response
+The function creates a recipe object using the `recipe()` function from the `recipes`
+package. The `as.formula()` function is used to create a formula where the response
 variable is specified as the response_var argument, and all other columns in the
 input dataframe are used as predictors.
 
 The recipe object includes two steps: scaling and centering the predictor variables.
-These steps are added to the recipe object using the step_scale() and step_center()
-functions from the recipes package. Finally, the function returns the recipe object,
+These steps are added to the recipe object using the `step_scale()` and `step_center()`
+functions from the `recipes` package. Finally, the function returns the recipe object,
 which can be used in a modeling workflow.
 
-To use the create_recipe() function, you need to provide a dataframe for the data
+To use the `create_recipe()` function, you need to provide a dataframe for the data
 argument and a string for the response_var argument. For example, to create a recipe
 object for the drug_consumption dataframe with the response variable set to "Cannabis",
 you can use the following code:
@@ -222,8 +240,8 @@ use in a modeling workflow. The function takes three arguments: data, which is a
 dataframe containing the data, v, which is an integer specifying the number of 
 folds, and strata, which specifies  the name of the strata variable for stratified sampling.
 
-The function creates a v-fold cross-validation object using the vfold_cv() function
-from the rsample package. The data and v arguments are passed to vfold_cv(), and
+The function creates a v-fold cross-validation object using the `vfold_cv()` function
+from the `rsample` package. The data and v arguments are passed to `vfold_cv()`, and
 the strata argument is used for stratified sampling if provided. The function then
 returns the v-fold cross-validation object.
 

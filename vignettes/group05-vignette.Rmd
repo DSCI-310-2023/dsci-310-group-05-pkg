@@ -92,23 +92,32 @@ test_data<- split_data[[2]]
 
 #### 2. Clean and wrangle data
 
-The `wrangle_training_data` function takes in a training dataset, a predictor variable, a strata variable, and group labels as inputs, and returns a data frame with 4 columns that are named as "predictor", "strata_variable", "n", and "label". 
+The `wrangle_training_data` function takes in a training dataset, a predictor variable, a strata variable, and group labels as inputs, and returns a data frame with 4 columns that are named "predictor", "strata_variable", "n", and "label". 
 
 The function groups the training data by the predictor and strata variable, summarizes the number of observations in each group, and lastly  adds a label column with group labels that are defined by the user.
 
-`training_data` argument is a data frame that contains the training data that is going to be wrangled and cleaned. `predictor` argument is a string or that spcifies the variable in the training data that is gonna be used as the predictor variable. `strata_variable` is a string that specifies the variable in the training data to be used as the stratification variable.`group_labels` is a strings to be used as labels for the groups in the resulting data frame.
+`training_data` argument is a data frame that contains the training data that is going to be wrangled and cleaned. `predictor` argument is a string that spcifies the variable in the training data that is gonna be used as the predictor variable. `strata_variable` is a string that specifies the variable in the training data to be used as the stratification variable.`group_labels` is a list of strings that are going to be used as labels for the groups in the resulting data frame.
 
+For example we can use `wrangle_training_data` function by providing `training_data = train_data`, `strata_dariable = "Canabis"` and `predictor = "Nicotine"` and `group_labels = labels` where `lables` is defined as  `c("Neither", "Cannabis only", "Nicotine only", "Both")`. 
+
+As a result, the function will return  a data frame with four columns: predictor, strata_variable, n, label.
 
 ```{r wrangle_training_data}
-labels<-c("Neither", "Cannabis only", "Nicotine only", "Both")
+labels<- c("Neither", "Cannabis only", "Nicotine only", "Both")
 wrangle_training_data(train_data, "Cannabis", "Nicotine", labels)
 ```
 
 ### Visualizations
 
+#### 1. Build a horizontal histogram with `horizontal_hist()`
 
 
 
+
+#### 2. Build a scatter plot with `scatterplot()`
+
+
+#### 3. Build a plot to help understand the accuracies with `accuracy_plot()`
 
 ### Classification Models 
 

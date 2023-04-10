@@ -50,10 +50,12 @@ naming the axes and the plot with the given labels,
 in a given size
 }
 \examples{
-scatterplot(OpenNicWeed, Oscore, rate, Nicotine, "Openness",
-  "Percentage of People Who Use Cannabis", "Use Nicotine",
-  "Openness vs. Cannabis use",
-  plot_width = 9, plot_height = 7
+test_data_1 <- data.frame(
+x = c(1, 2, 3, 4), y = c(10, 20, 30, 40),
+color = c("red", "blue", "green", "red")
 )
+
+scatterplot(test_data_1, "x", "y", "color", "x", "y", "Color",
+"Test Plot", plot_width = 6, plot_height = 4)
 
 }

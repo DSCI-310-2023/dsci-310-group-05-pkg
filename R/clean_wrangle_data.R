@@ -19,10 +19,18 @@
 #' @export
 #'
 #' @examples
-#' group_labels <- c("Group 1", "Group 2")
+#' training_data <- data.frame(
+#'   predictor = c("yes", "no", "yes", "no"),
+#'   strata_variable = c("yes", "yes", "no", "no"),
+#'   outcome = c(1, 1, 0, 1)
+#'   )
 #'
-#' wrangle_training_data(
-#'   training_data, Nicotine, Cannabis,
+#'  predictor <- "predictor"
+#'  strata_variable <- "strata_variable"
+#'  group_labels <- c("Group 1")
+#'
+#'  wrangle_training_data(
+#'   training_data, strata_variable, predictor,
 #'   group_labels)
 #'
 wrangle_training_data <- function(training_data, predictor, strata_variable,

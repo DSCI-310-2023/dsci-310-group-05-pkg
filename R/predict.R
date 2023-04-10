@@ -11,7 +11,21 @@
 #' the data folder
 #' @export
 #'
-#' @examples predict_drugs_workflow(drugs_workflow, drugs_test)
+#' @examples
+#' test_data <- data.frame(
+#'   X1 = c(0.5, 0.1, 0.7),
+#'   X2 = c(0.9, 0.3, 0.6),
+#'   X3 = c(0.2, 0.4, 0.8)
+#'   )
+#'
+#' knn_workflow <- data.frame(
+#'  .metric = rep("accuracy", 30),
+#'  neighbors = 1:30,
+#'  mean = rnorm(30)
+#'  )
+#'
+#' predict_drugs_workflow(knn_workflow, test_data)
+
 predict_drugs_workflow <- function(knn_wf, test_data = testing_data) {
   if (is.null(knn_wf)) {
     stop("The knn_wf input cannot be null.")

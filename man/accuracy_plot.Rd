@@ -24,3 +24,13 @@ Creates a line plot depicting the relationship between two variables,
 one of them being the accuracy
 naming the axes and the plot with the given labels,
 }
+\examples{
+test_data_2 <- data.frame(
+ .metric = rep("accuracy", 30),
+ neighbors = 1:30,
+ mean = rnorm(30)
+ )
+
+accuracy_plot(test_data_2, "Neighbors", "Accuracy", "Accuracy Plot for Test Data 2")
+
+}

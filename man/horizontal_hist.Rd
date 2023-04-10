@@ -42,9 +42,12 @@ naming the axes and the plot with the given labels,
 in a given size
 }
 \examples{
-horizontal_hist(cannabis_and_nicotine, label, n, "",
-  "Amount of participants", "Nicotine usage vs. Cannabis usage",
-  plot_width = 8, plot_height = 6
+test_data_1 <- data.frame(
+x = c(1, 2, 3, 4), y = c(10, 20, 30, 40),
+color = c("red", "blue", "green", "red")
 )
+
+horizontal_hist(test_data_1, "x", "y", "x", "y", "Test Plot",
+plot_width = 6, plot_height = 4)
 
 }

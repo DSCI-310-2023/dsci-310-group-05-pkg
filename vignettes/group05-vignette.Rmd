@@ -50,6 +50,7 @@ library(group05pkg)
 library(dplyr)
 library(stringr)
 library(forcats)
+set.seed(2)
 ```
 
 ```{r drug-consumption}
@@ -103,8 +104,8 @@ drug_consumption <- select(
 We can break down our functions into 3 different groups: 
 
 - EDA 
-- Visualizations
 - Classification Models
+- Visualizations
 
 ### EDA
 
@@ -134,6 +135,15 @@ test_data<- split_data[[2]]
 ```
 
 ```{r data-cleaning-2, include=FALSE}
+
+train_data <- mutate(train_data,
+  Nicotine = str_replace_all(
+    Nicotine,
+    c("yes" = "1", "no" = "0")
+  )
+) %>%
+  mutate(Nicotine = as.numeric(Nicotine))
+
 test_data <- mutate(test_data,
   Nicotine = str_replace_all(
     Nicotine,
@@ -173,12 +183,6 @@ cannabis_and_nicotine <- wrangle_training_data(
   labels
 )
 ```
-
-### Visualizations
-
-
-
-
 
 ### Classification Models 
 
@@ -293,12 +297,12 @@ Finally, the function returns the new data frame containing the predicted outcom
 of the strata variable for the new test data. Additionally, the predicted outcome
 is written to the data folder.
 
-For example, if you had a fitted KNN workflow object called drugs_workflow and a
+For example, if you had a fitted KNN workflow object called drugs_real_workflow and a
 data frame of new test data called test_data, you could use the following code to
 predict the outcome of cannabis usage for the new test data and write the predicted
 outcome to the data folder:
 
-```{r predict_drugs_workflow}
+```{r predict_drugs_workflow, include = FALSE}
 drugs_real_spec <- nearest_neighbor(
   weight_func = "rectangular",
   neighbors = 23
@@ -310,8 +314,60 @@ drugs_real_workflow <- workflow() %>%
   add_recipe(drugs_recipe) %>%
   add_model(drugs_real_spec) %>%
   fit(data = test_data)
+```
 
-# calculating how well the training data predicts the testing data
+```{r drugs-pred}
 drugs_pred <- predict_drugs_workflow(drugs_real_workflow, test_data)
 drugs_pred
+```
+
+### Visualizations
+
+
+
+#### 3. Plot an accuracy plot using 'accuracy_plot()'
+
+`accuracy_plot()` is a function that builds a line plot to help understand the 
+accuracies of a KNN model with different numbers of neighbors. The function takes
+four arguments: workflow_data, which is a data frame containing the KNN workflow
+data and accuracies, x_label, which is the name given to the x axis, y_label, 
+which is the name given to the y axis, and plot_title, which is the name given to
+the entire graph.
+
+The function first filters the workflow_data for the accuracy metric, selecting 
+only the rows that correspond to the accuracy values for the different numbers 
+of neighbors.
+
+Next, the function builds the line plot using ggplot() from the ggplot2 package.
+The x-axis represents the number of neighbors and the y-axis represents the mean
+accuracy. The plot includes points and a line connecting them.
+
+The function uses `labs()` to set the x and y axis labels and the title of the plot
+using the x_label, y_label, and plot_title arguments, respectively. The function
+also sets the size of the text elements in the plot using `theme()`.
+
+Finally, the function returns the line plot as an object of class ggplot.The size 
+of the plot is set using the `options()` function.
+
+For example, if you had a KNN workflow data called drugs_workflow, you could use
+the following code to build a line plot depicting the relationship between the 
+number of neighbors and the accuracy of the estimates and label the axes and the
+plot with the given labels:
+
+```{r drugs_workflow, include=FALSE}
+drugs_workflow <- workflow() %>%
+  add_recipe(drugs_recipe) %>%
+  add_model(drugs_knn_spec) %>%
+  tune_grid(resamples = drugs_vfold, grid = drugs_grid) %>%
+  collect_metrics()
+```
+
+
+```{r acc_plot, out.height=200, out.width=700, fig.height = 3, fig.width = 10, fig.align = "left"}
+acc_plot <- accuracy_plot(drugs_workflow,
+  x_label = "Number of Neighbors",
+  y_label = "Accuracy Estimate",
+  plot_title = "Neighbors vs. Accuracy"
+)
+acc_plot
 ```

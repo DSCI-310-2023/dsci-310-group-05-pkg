@@ -173,8 +173,14 @@ the variable in the training data that is gonna be used as the predictor variabl
 be used as the stratification variable.`group_labels` is a strings to be used as 
 labels for the groups in the resulting data frame.
 
+For example we can use `wrangle_training_data` function by providing `training_data = train_data`,
+`strata_dariable = "Canabis"` and `predictor = "Nicotine"` and `group_labels = labels` where `lables`
+is defined as  `c("Neither", "Cannabis only", "Nicotine only", "Both")`. 
+
+As a result, the function will return  a data frame with four columns: predictor, strata_variable, n, label.
 
 ```{r wrangle_training_data}
+
 labels <- c("Neither", "Cannabis only", "Nicotine only", "Both")
 cannabis_and_nicotine <- wrangle_training_data(
   train_data,
@@ -182,6 +188,7 @@ cannabis_and_nicotine <- wrangle_training_data(
   Cannabis,
   labels
 )
+
 ```
 
 ### Classification Models 

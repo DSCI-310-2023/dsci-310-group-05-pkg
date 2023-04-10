@@ -81,6 +81,7 @@ create_knn_spec() is a function that creates a specification object for k-neares
 neighbor (KNN) models. The function takes one argument, weight_func, which is a 
 string that specifies the weight function to use in the model.
 
+
 The function creates a specification object using the nearest_neighbor() function
 from the parsnip package. The weight_func argument is used to set the weight 
 function in the specification object.
@@ -187,5 +188,3 @@ For example, if you had a fitted KNN workflow object called drugs_workflow and a
 data frame of new test data called test_data, you could use the following code to
 predict the outcome of cannabis usage for the new test data and write the predicted
 outcome to the data folder:
-
-

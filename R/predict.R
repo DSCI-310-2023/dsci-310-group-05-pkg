@@ -9,6 +9,9 @@
 #' cannabis usage
 #' @return Writes the predicted outcome of cannabis usage for the new data in
 #' the data folder
+#' @import workflows
+#' @importFrom stats predict
+#' @importFrom dplyr bind_cols
 #' @export
 #'
 #' @examples
@@ -47,7 +50,7 @@
 #'
 #' predict_drugs_workflow(mock_knn_wf, test_data)
 
-predict_drugs_workflow <- function(knn_wf, test_data = testing_data) {
+predict_drugs_workflow <- function(knn_wf, test_data) {
   if (is.null(knn_wf)) {
     stop("The knn_wf input cannot be null.")
   }

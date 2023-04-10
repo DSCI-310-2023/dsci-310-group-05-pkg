@@ -2,7 +2,7 @@
 title: "Introduction to group05pkg"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{package_name-vignette}
+  %\VignetteIndexEntry{group05pkg-vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -47,10 +47,12 @@ set has `1884 rows` and `32 columns`.
 
 ```{r setup, include = FALSE}
 library(group05pkg)
+library(dplyr)
 ```
 
 ```{r drug-consumption}
-drug_consumption <- readr::read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/00373/drug_consumption.data")
+url <-"https://archive.ics.uci.edu/ml/machine-learning-databases/00373/drug_consumption.data"
+drug_consumption <- readr::read_csv(url)
 
 colnames(drug_consumption) <- c(
   "ID", "Age", "Gender", "Education", "Country", "Ethnicity",
@@ -75,9 +77,9 @@ We can break down our functions into 3 different groups:
 
 #### 1. Create knn specification with `create_knn_spec()`
 
-create_knn_spec() is a function in R that creates a specification object for 
-k-nearest neighbor models. The function takes one argument, weight_func, which
-is a string that specifies the weight function to use in the model.
+create_knn_spec() is a function that creates a specification object for k-nearest
+neighbor (KNN) models. The function takes one argument, weight_func, which is a 
+string that specifies the weight function to use in the model.
 
 The function creates a specification object using the nearest_neighbor() function
 from the parsnip package. The weight_func argument is used to set the weight 
@@ -92,11 +94,98 @@ classification mode. Finally, the function returns the specification object.
 
 To use the create_knn_spec() function, you simply provide a string for the 
 weight_func argument. For example, to create a specification object with a weight 
-function of "triangular", you can use the following code:
+function of "rectangular", you can use the following code:
 
 ```{r create-knn-spec}
-knn_spec <- create_knn_spec("rectangular")
-knn_spec
+drugs_knn_spec <- create_knn_spec("rectangular")
+drugs_knn_spec
 ```
 #### 2. Create knn specification with `create_recipe()`
+
+create_recipe() is a function that creates a recipe object for use in a modeling
+workflow. The function takes two arguments: data, a dataframe containing the data,
+and response_var, a string that specifies the name of the response variable.
+
+The function creates a recipe object using the recipe() function from the recipes
+package. The as.formula() function is used to create a formula where the response
+variable is specified as the response_var argument, and all other columns in the
+input dataframe are used as predictors.
+
+The recipe object includes two steps: scaling and centering the predictor variables.
+These steps are added to the recipe object using the step_scale() and step_center()
+functions from the recipes package. Finally, the function returns the recipe object,
+which can be used in a modeling workflow.
+
+To use the create_recipe() function, you need to provide a dataframe for the data
+argument and a string for the response_var argument. For example, to create a recipe
+object for the drug_consumption dataframe with the response variable set to "Cannabis",
+you can use the following code:
+
+```{r create-recipe}
+drugs_recipe <- create_recipe(data = drug_consumption, response_var = "Cannabis")
+drugs_recipe
+```
+#### 3. Create vfold with `create_vfold()`
+
+`create_vfold()` is a function that creates a v-fold cross-validation object for 
+use in a modeling workflow. The function takes three arguments: data, which is a
+dataframe containing the data, v, which is an integer specifying the number of 
+folds, and strata, which specifies  the name of the strata variable for stratified sampling.
+
+The function creates a v-fold cross-validation object using the vfold_cv() function
+from the rsample package. The data and v arguments are passed to vfold_cv(), and
+the strata argument is used for stratified sampling if provided. The function then
+returns the v-fold cross-validation object.
+
+For example, if you wanted to create a v-fold cross-validation object with 5 folds
+and stratified by the "Cannabis" variable, you can use the following code:
+
+```{r create-vfold}
+drugs_vfold <- create_vfold(drug_consumption, 5, "Cannabis")
+```
+
+#### 4. Create grid with `create_grid()`
+
+`create_grid()` is a function that generates a grid of values to tune over for 
+the number of nearest neighbors in the k-nearest neighbor classification model. 
+It takes two arguments: min_neighbors, which is an integer specifying the minimum
+number of neighbors to include in the grid, and max_neighbors, which is an integer
+specifying the maximum number of neighbors to include in the grid.
+
+The function then creates a tibble containing a sequence of integers ranging from
+the specified min_neighbors to max_neighbors, inclusive. The tibble contains a 
+single column named "neighbors" which represents the number of neighbors to use 
+in the k-nearest neighbor model. Finally, the function returns the tibble.
+
+For example, if you wanted to generate a grid of values to tune over for the number
+of nearest neighbors in the k-nearest neighbor classification model, where the 
+minimum number of neighbors is 1 and the maximum number of neighbors is 30, 
+you can use the following code:
+
+```{r create-grid}
+drugs_grid <- create_grid(1, 30)
+```
+
+#### 5. Predict Accuracy of Workflow with `predict_drugs_workflow`
+
+`predict_drugs_workflow()` is a function that predicts the outcome of a target 
+variable for new test data given a fitted KNN workflow object.The function takes
+two arguments: knn_wf, which is a fitted KNN workflow object, and test_data, which
+is a data frame containing new test data to predict the outcome of cannabis usage.
+
+The function uses the `predict()` function from the `stats` package to predict the 
+outcome of the strata variable on new test data using the KNN model in knn_wf. 
+The predicted outcome is then combined with the original test data using the 
+`bind_cols()` function from the `dplyr` package to create a new data frame 
+containing the predicted outcome.
+
+Finally, the function returns the new data frame containing the predicted outcome
+of the strata variable for the new test data. Additionally, the predicted outcome
+is written to the data folder.
+
+For example, if you had a fitted KNN workflow object called drugs_workflow and a
+data frame of new test data called test_data, you could use the following code to
+predict the outcome of cannabis usage for the new test data and write the predicted
+outcome to the data folder:
+
 

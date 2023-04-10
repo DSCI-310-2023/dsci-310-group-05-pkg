@@ -22,17 +22,38 @@ the outcome of a target variable for the test data using the KNN model.
 The predicted outcome is then written to the data folder.
 }
 \examples{
+library(magrittr)
+n <- 1000
+mock_pred_data <- data.frame(
+  predicted_outcome = sample(c("no", "yes"), n, replace = TRUE),
+  X1 = rnorm(n),
+  X2 = rnorm(n),
+  X3 = rnorm(n)
+)
+
 test_data <- data.frame(
   X1 = c(0.5, 0.1, 0.7),
   X2 = c(0.9, 0.3, 0.6),
   X3 = c(0.2, 0.4, 0.8)
-  )
+)
 
-knn_workflow <- data.frame(
- .metric = rep("accuracy", 30),
- neighbors = 1:30,
- mean = rnorm(30)
- )
+mock_spec <- parsnip::nearest_neighbor(
+  weight_func = "rectangular",
+  neighbors = parsnip::tune()
+) \%>\%
+  parsnip::set_engine("kknn") \%>\%
+  parsnip::set_mode("classification")
 
-predict_drugs_workflow(knn_workflow, test_data)
+mock_recipe <- recipes::recipe(as.formula(paste0("predicted_outcome", " ~ .")),
+                               data = mock_pred_data
+                               ) \%>\%
+recipes::step_scale(recipes::all_predictors()) \%>\%
+recipes::step_center(recipes::all_predictors())
+
+mock_knn_wf <- workflows::workflow() \%>\%
+  workflows::add_recipe(mock_recipe) \%>\%
+  workflows::add_model(mock_spec) \%>\%
+  parsnip::fit(data = mock_pred_data)
+
+predict_drugs_workflow(mock_knn_wf, test_data)
 }

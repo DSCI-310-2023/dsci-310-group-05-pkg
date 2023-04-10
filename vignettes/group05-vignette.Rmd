@@ -190,7 +190,6 @@ cannabis_and_nicotine <- wrangle_training_data(
 )
 
 ```
-
 ### Classification Models 
 
 #### 1. Create knn specification with `create_knn_spec()`
@@ -330,9 +329,74 @@ drugs_pred
 
 ### Visualizations
 
+#### 1. Build a horizontal histogram with `horizontal_hist()`
+
+`horizontal_hist()` is a function that creates a horizontal bar plot from the  data frame
+that is given as input. It takes the specified variables as inputs and then it creates a 
+histogram with the given plot title, x-axis label, and y-axis label. The plot width and
+height can also be changed according to user preference.
+
+`data` argument is the input data frame to be plotted `x_var` argument is the name of the
+variable to be plotted on the x-axis, `y_var` the name of the variable to be plotted on the
+y-axis, `x_label` is the label for the x-axis, `y_label` is the label for the y-axis,`plot_title`
+is the title for the plot, `plot_width` is the width of the plot and`plot_height` is the height 
+of the plot.
+
+For exmaple, we can use `horizontal_hist` function by providing `data = cannabis_and_nicotine`,
+`x_var = n`, `y_var = labels`, `x_label = "Amount of Participants"`, `y_label = "Labels"`, 
+`plot_title = "Nicotine usage vs Cannabis usage"`, `plot_width = 10`, and `plot_height = 5`.
+This will create a horizontal histogram as it can be seen below.
+
+```{r horizontal_hist, out.height=200, out.width=600, fig.height = 3, fig.width = 10, 
+fig.align = "center", warning=FALSE}
+horizontal_hist(data = cannabis_and_nicotine, 
+                x_var = n, 
+                y_var = labels, 
+                x_label = "Amount of Participants", 
+                y_label = "Labels", 
+                plot_title = "Nicotine usage vs Cannabis usage", 
+                plot_width = 10, 
+                plot_height = 5)
+```
 
 
-#### 3. Plot an accuracy plot using 'accuracy_plot()'
+#### 2. Build a scatter plot with `scatterplot()`
+
+`scatterplot` is a function that takes the specified variables as inputs and then it creates
+a histogram with the given plot title, x-axis label, y-axis label and color legend label.
+The plot width and height can also be changed according to user preference.
+
+`data` argument is the input data frame to be plotted, `x_var`argument is the name of the
+variable to be plotted on the x-axis, `y_var` argument is  the name of the variable to be
+plotted on the y-axis, `color_var` argument is the name of the variable to be used for color
+coding,  `x_label` arguemt is the label for the x-axis, `y_label` argument is the label for 
+the y-axis, `color_label` argument is the label for the color legend, `plot_title` arguement
+is the title for the plot, `plot_width` argument is the width of the plot, `plot_height` 
+argument is the height of the plot.
+
+For example, we can use `scatterplot` function by providing `data = example_data`(it is hidden
+in the code for this example), `x_var = Oscore`, `y_var = rate`, `color_var = Nicotine`,
+`x_label = "Openness"`, `y_label = "Percentage of People Who Use Cannabis"`,
+`color_label = "Use Nicotine"` , `plot_title = "Openness vs. Cannabis use"`, 
+`plot_width = 9`, and `plot_height = 7`. This will create a scatterplot as it 
+can be seen below.
+
+```{r example_data, include=FALSE}
+library(tidyr)
+example_data <- group_by(train_data, Oscore, Nicotine, Cannabis) %>%
+               summarize(n = n()) %>%
+               pivot_wider(names_from = Cannabis, values_from = n) %>%
+               replace(is.na(.), 0) %>%  # To make sure 0s don't get read as NAs
+               mutate(total = yes + no) %>%  # To find rate
+               mutate(rate = yes / total * 100)
+```
+ 
+```{r scatterplot, out.height=600, out.width=500, fig.height = 10, fig.width = 8, fig.align = "center"}
+scatterplot(example_data, Oscore, rate, Nicotine, "Openness", "Percentage of People Who Use Cannabis", 
+"Use Nicotine", "Openness vs. Cannabis use", plot_width = 9, plot_height = 7)
+```
+
+#### 3. Build a plot to help understand the accuracies with `accuracy_plot()`
 
 `accuracy_plot()` is a function that builds a line plot to help understand the 
 accuracies of a KNN model with different numbers of neighbors. The function takes

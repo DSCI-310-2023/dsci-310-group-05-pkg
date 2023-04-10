@@ -41,12 +41,62 @@ to tune the performance of a model.
 This document introduces you to group05pkg’s basic set of tools, and shows you 
 how to apply them to run a classification analysis.
 
-## Data: iris 
-To explore the package, we will be using the iris data set. This data set contains
-`150 rows` and `5 columns`. To read the iris data set documentation, you can check `?iris`
+## Data: drug_consumption
+To explore the package, we will be using the `drug_consumption` data set.This data
+set has `1884 rows` and `32 columns`.
 
-```{r setup}
+```{r setup, include = FALSE}
 library(group05pkg)
-dim(iris)
-head(iris)
 ```
+
+```{r drug-consumption}
+drug_consumption <- readr::read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/00373/drug_consumption.data")
+
+colnames(drug_consumption) <- c(
+  "ID", "Age", "Gender", "Education", "Country", "Ethnicity",
+  "Nscore", "Escore", "Oscore", "Ascore", "Cscore",
+  "Impulsive", "SS", "Alcohol", "Amphet", "Amyl", "Benzos",
+  "Caff", "Cannabis", "Choc", "Coke", "Crack", "Ecstasy",
+  "Heroin", "Ketamine", "Legalh", "LSD", "Meth", "Mushrooms",
+  "Nicotine", "Semer", "VSA"
+)
+head(drug_consumption)
+```
+
+## Functions
+
+We can break down our functions into 3 different groups: 
+
+- EDA 
+- Visualizations
+- Classification Models
+
+### Classification Models 
+
+#### 1. Create knn specification with `create_knn_spec()`
+
+create_knn_spec() is a function in R that creates a specification object for 
+k-nearest neighbor models. The function takes one argument, weight_func, which
+is a string that specifies the weight function to use in the model.
+
+The function creates a specification object using the nearest_neighbor() function
+from the parsnip package. The weight_func argument is used to set the weight 
+function in the specification object.
+
+The neighbors parameter is set as a tuning parameter using the tune() function. 
+This means that the number of neighbors will be selected based on the best 
+performance during model training.
+
+The specification object is then set to use the kknn engine and set to 
+classification mode. Finally, the function returns the specification object.
+
+To use the create_knn_spec() function, you simply provide a string for the 
+weight_func argument. For example, to create a specification object with a weight 
+function of "triangular", you can use the following code:
+
+```{r create-knn-spec}
+knn_spec <- create_knn_spec("rectangular")
+knn_spec
+```
+#### 2. Create knn specification with `create_recipe()`
+

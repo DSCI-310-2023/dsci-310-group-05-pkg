@@ -42,7 +42,7 @@ This document introduces you to group05pkg’s basic set of tools, and shows you
 how to apply them to run a classification analysis.
 
 ## Data: drug_consumption
-To explore the package, we will be using the `drug_consumption` data set.This data
+To explore the package, we will be using the `drug_consumption` data set. This data
 set has `1884 rows` and `32 columns`.
 
 ```{r setup, include = FALSE}
@@ -50,6 +50,7 @@ library(group05pkg)
 library(dplyr)
 library(stringr)
 library(forcats)
+set.seed(2)
 ```
 
 ```{r drug-consumption}
@@ -103,20 +104,29 @@ drug_consumption <- select(
 We can break down our functions into 3 different groups: 
 
 - EDA 
-- Visualizations
 - Classification Models
+- Visualizations
 
 ### EDA
 
 #### 1. Split the dataset into training and testing sets 
 
-The `split_dataset` is a function that splits a dataset into training and test sets. The function takes in a dataset, a strata variable, and a predictor variable as inputs and performs a stratified random split of the dataset into training and testing subsets.
+The `split_dataset` is a function that splits a dataset into training and test 
+sets. The function takes in a dataset, a strata variable, and a predictor variable
+as inputs and performs a stratified random split of the dataset into training and
+testing subsets.
 
-`data_set` argument is a data frame containing the original data that will be split into training and testing sets. `strata_variable` is a string specifying the variable in `data_set` that will be used as a stratification variable for the split. `predictor` is a string that indicates the variable in the `data_set` that is going to be considered as the predictor variable.
+`data_set` argument is a data frame containing the original data that will be 
+split into training and testing sets. `strata_variable` is a string specifying 
+the variable in `data_set` that will be used as a stratification variable for 
+the split. `predictor` is a string that indicates the variable in the `data_set`
+that is going to be considered as the predictor variable.
 
 The function returns a list that contains the training set and testing set. 
 
-For example, we can use `split_dataset()` function by providing `data_set = drug_consumption`, `strata_dariable = "Canabis"` and `predictor = "Nicotine"`. This will split our `drug_consumption` into train and test sets.
+For example, we can use `split_dataset()` function by providing 
+`data_set = drug_consumption`, `strata_dariable = "Canabis"` and `predictor = "Nicotine"`.
+This will split our `drug_consumption` into train and test sets.
 
 ```{r split_dataset}
 split_data <- split_dataset(drug_consumption, "Cannabis", "Nicotine")
@@ -125,6 +135,15 @@ test_data<- split_data[[2]]
 ```
 
 ```{r data-cleaning-2, include=FALSE}
+
+train_data <- mutate(train_data,
+  Nicotine = str_replace_all(
+    Nicotine,
+    c("yes" = "1", "no" = "0")
+  )
+) %>%
+  mutate(Nicotine = as.numeric(Nicotine))
+
 test_data <- mutate(test_data,
   Nicotine = str_replace_all(
     Nicotine,
@@ -139,13 +158,24 @@ test_data <- mutate(test_data,
 
 #### 2. Clean and wrangle data
 
-The `wrangle_training_data` function takes in a training dataset, a predictor variable, a strata variable, and group labels as inputs, and returns a data frame with 4 columns that are named "predictor", "strata_variable", "n", and "label". 
+The `wrangle_training_data` function takes in a training dataset, a predictor 
+variable, a strata variable, and group labels as inputs, and returns a data frame
+with 4 columns that are named as "predictor", "strata_variable", "n", and "label". 
 
-The function groups the training data by the predictor and strata variable, summarizes the number of observations in each group, and lastly  adds a label column with group labels that are defined by the user.
+The function groups the training data by the predictor and strata variable, 
+summarizes the number of observations in each group, and lastly  adds a label 
+column with group labels that are defined by the user.
 
-`training_data` argument is a data frame that contains the training data that is going to be wrangled and cleaned. `predictor` argument is a string that spcifies the variable in the training data that is gonna be used as the predictor variable. `strata_variable` is a string that specifies the variable in the training data to be used as the stratification variable.`group_labels` is a list of strings that are going to be used as labels for the groups in the resulting data frame.
+`training_data` argument is a data frame that contains the training data that is
+going to be wrangled and cleaned. `predictor` argument is a string or that spcifies
+the variable in the training data that is gonna be used as the predictor variable.
+`strata_variable` is a string that specifies the variable in the training data to
+be used as the stratification variable.`group_labels` is a strings to be used as 
+labels for the groups in the resulting data frame.
 
-For example we can use `wrangle_training_data` function by providing `training_data = train_data`, `strata_dariable = "Canabis"` and `predictor = "Nicotine"` and `group_labels = labels` where `lables` is defined as  `c("Neither", "Cannabis only", "Nicotine only", "Both")`. 
+For example we can use `wrangle_training_data` function by providing `training_data = train_data`,
+`strata_dariable = "Canabis"` and `predictor = "Nicotine"` and `group_labels = labels` where `lables`
+is defined as  `c("Neither", "Cannabis only", "Nicotine only", "Both")`. 
 
 As a result, the function will return  a data frame with four columns: predictor, strata_variable, n, label.
 
@@ -160,76 +190,27 @@ cannabis_and_nicotine <- wrangle_training_data(
 )
 
 ```
-
-### Visualizations
-
-#### 1. Build a horizontal histogram with `horizontal_hist()`
-
-`horizontal_hist()` is a function that creates a horizontal bar plot from the  data frame that is given as input. It takes the specified variables as inputs and then it creates a histogram with the given plot title, x-axis label, and y-axis label. The plot width and height can also be changed according to user preference.
-
-`data` argument is the input data frame to be plotted `x_var` argument is the name of the variable to be plotted on the x-axis, `y_var` the name of the variable to be plotted on the y-axis, `x_label` is the label for the x-axis, `y_label` is the label for the y-axis,`plot_title` is the title for the plot, `plot_width` is the width of the plot and`plot_height` is the height of the plot.
-
-For exmaple, we can use `horizontal_hist` function by providing `data = cannabis_and_nicotine`, `x_var = n`, `y_var = labels`, `x_label = "Amount of Participants"`, `y_label = "Labels"`, `plot_title = "Nicotine usage vs Cannabis usage"`, `plot_width = 10`, and `plot_height = 5`. This will create a horizontal histogram as it can be seen below.
-
-```{r horizontal_hist, out.height=200, out.width=600, fig.height = 3, fig.width = 10, fig.align = "center", warning=FALSE}
-horizontal_hist(data = cannabis_and_nicotine, 
-                x_var = n, 
-                y_var = labels, 
-                x_label = "Amount of Participants", 
-                y_label = "Labels", 
-                plot_title = "Nicotine usage vs Cannabis usage", 
-                plot_width = 10, 
-                plot_height = 5)
-```
-
-
-#### 2. Build a scatter plot with `scatterplot()`
-
-`scatterplot` is a function that takes the specified variables as inputs and then it creates a histogram with the given plot title, x-axis label, y-axis label and color legend label. The plot width and height can also be changed according to user preference.
-
-`data` argument is the input data frame to be plotted, `x_var`argument is the name of the variable to be plotted on the x-axis, `y_var` argument is  the name of the variable to be plotted on the y-axis, `color_var` argument is the name of the variable to be used for color coding,  `x_label` arguemt is the label for the x-axis,
-`y_label` argument is the label for the y-axis, `color_label` argument is the label for the color legend, `plot_title` arguement is the title for the plot, `plot_width` argument is the width of the plot, `plot_height` argument is the height of the plot.
-
-For example, we can use `scatterplot` function by providing `data = example_data`(it is hidden in the code for this example), `x_var = Oscore`, `y_var = rate`, `color_var = Nicotine`, `x_label = "Openness"`, `y_label = "Percentage of People Who Use Cannabis"`, `color_label = "Use Nicotine"` , `plot_title = "Openness vs. Cannabis use"`, `plot_width = 9`, and `plot_height = 7`. This will create a scatterplot as it can be seen below.
-
-```{r example_data, include=FALSE}
-library(tidyr)
-example_data <- group_by(train_data, Oscore, Nicotine, Cannabis) %>%
-               summarize(n = n()) %>%
-               pivot_wider(names_from = Cannabis, values_from = n) %>%
-               replace(is.na(.), 0) %>%  # To make sure 0s don't get read as NAs
-               mutate(total = yes + no) %>%  # To find rate
-               mutate(rate = yes / total * 100)
-```
- 
-```{r scatterplot, out.height=600, out.width=500, fig.height = 10, fig.width = 8, fig.align = "center"}
-scatterplot(example_data, Oscore, rate, Nicotine, "Openness", "Percentage of People Who Use Cannabis", "Use Nicotine", "Openness vs. Cannabis use", plot_width = 9, plot_height = 7)
-```
-
-#### 3. Build a plot to help understand the accuracies with `accuracy_plot()`
-
-
 ### Classification Models 
 
 #### 1. Create knn specification with `create_knn_spec()`
 
-create_knn_spec() is a function that creates a specification object for k-nearest
+`create_knn_spec()` is a function that creates a specification object for k-nearest
 neighbor (KNN) models. The function takes one argument, weight_func, which is a 
 string that specifies the weight function to use in the model.
 
 
-The function creates a specification object using the nearest_neighbor() function
-from the parsnip package. The weight_func argument is used to set the weight 
+The function creates a specification object using the `nearest_neighbor()` function
+from the `parsnip` package. The weight_func argument is used to set the weight 
 function in the specification object.
 
-The neighbors parameter is set as a tuning parameter using the tune() function. 
+The neighbors parameter is set as a tuning parameter using the `tune()` function. 
 This means that the number of neighbors will be selected based on the best 
 performance during model training.
 
 The specification object is then set to use the kknn engine and set to 
 classification mode. Finally, the function returns the specification object.
 
-To use the create_knn_spec() function, you simply provide a string for the 
+To use the `create_knn_spec()` function, you simply provide a string for the 
 weight_func argument. For example, to create a specification object with a weight 
 function of "rectangular", you can use the following code:
 
@@ -239,21 +220,21 @@ drugs_knn_spec
 ```
 #### 2. Create knn specification with `create_recipe()`
 
-create_recipe() is a function that creates a recipe object for use in a modeling
+`create_recipe()` is a function that creates a recipe object for use in a modeling
 workflow. The function takes two arguments: data, a dataframe containing the data,
 and response_var, a string that specifies the name of the response variable.
 
-The function creates a recipe object using the recipe() function from the recipes
-package. The as.formula() function is used to create a formula where the response
+The function creates a recipe object using the `recipe()` function from the `recipes`
+package. The `as.formula()` function is used to create a formula where the response
 variable is specified as the response_var argument, and all other columns in the
 input dataframe are used as predictors.
 
 The recipe object includes two steps: scaling and centering the predictor variables.
-These steps are added to the recipe object using the step_scale() and step_center()
-functions from the recipes package. Finally, the function returns the recipe object,
+These steps are added to the recipe object using the `step_scale()` and `step_center()`
+functions from the `recipes` package. Finally, the function returns the recipe object,
 which can be used in a modeling workflow.
 
-To use the create_recipe() function, you need to provide a dataframe for the data
+To use the `create_recipe()` function, you need to provide a dataframe for the data
 argument and a string for the response_var argument. For example, to create a recipe
 object for the drug_consumption dataframe with the response variable set to "Cannabis",
 you can use the following code:
@@ -269,8 +250,8 @@ use in a modeling workflow. The function takes three arguments: data, which is a
 dataframe containing the data, v, which is an integer specifying the number of 
 folds, and strata, which specifies  the name of the strata variable for stratified sampling.
 
-The function creates a v-fold cross-validation object using the vfold_cv() function
-from the rsample package. The data and v arguments are passed to vfold_cv(), and
+The function creates a v-fold cross-validation object using the `vfold_cv()` function
+from the `rsample` package. The data and v arguments are passed to `vfold_cv()`, and
 the strata argument is used for stratified sampling if provided. The function then
 returns the v-fold cross-validation object.
 
@@ -322,12 +303,12 @@ Finally, the function returns the new data frame containing the predicted outcom
 of the strata variable for the new test data. Additionally, the predicted outcome
 is written to the data folder.
 
-For example, if you had a fitted KNN workflow object called drugs_workflow and a
+For example, if you had a fitted KNN workflow object called drugs_real_workflow and a
 data frame of new test data called test_data, you could use the following code to
 predict the outcome of cannabis usage for the new test data and write the predicted
 outcome to the data folder:
 
-```{r predict_drugs_workflow}
+```{r predict_drugs_workflow, include = FALSE}
 drugs_real_spec <- nearest_neighbor(
   weight_func = "rectangular",
   neighbors = 23
@@ -339,8 +320,125 @@ drugs_real_workflow <- workflow() %>%
   add_recipe(drugs_recipe) %>%
   add_model(drugs_real_spec) %>%
   fit(data = test_data)
+```
 
-# calculating how well the training data predicts the testing data
+```{r drugs-pred}
 drugs_pred <- predict_drugs_workflow(drugs_real_workflow, test_data)
 drugs_pred
+```
+
+### Visualizations
+
+#### 1. Build a horizontal histogram with `horizontal_hist()`
+
+`horizontal_hist()` is a function that creates a horizontal bar plot from the  data frame
+that is given as input. It takes the specified variables as inputs and then it creates a 
+histogram with the given plot title, x-axis label, and y-axis label. The plot width and
+height can also be changed according to user preference.
+
+`data` argument is the input data frame to be plotted `x_var` argument is the name of the
+variable to be plotted on the x-axis, `y_var` the name of the variable to be plotted on the
+y-axis, `x_label` is the label for the x-axis, `y_label` is the label for the y-axis,`plot_title`
+is the title for the plot, `plot_width` is the width of the plot and`plot_height` is the height 
+of the plot.
+
+For exmaple, we can use `horizontal_hist` function by providing `data = cannabis_and_nicotine`,
+`x_var = n`, `y_var = labels`, `x_label = "Amount of Participants"`, `y_label = "Labels"`, 
+`plot_title = "Nicotine usage vs Cannabis usage"`, `plot_width = 10`, and `plot_height = 5`.
+This will create a horizontal histogram as it can be seen below.
+
+```{r horizontal_hist, out.height=200, out.width=600, fig.height = 3, fig.width = 10, 
+fig.align = "center", warning=FALSE}
+horizontal_hist(data = cannabis_and_nicotine, 
+                x_var = n, 
+                y_var = labels, 
+                x_label = "Amount of Participants", 
+                y_label = "Labels", 
+                plot_title = "Nicotine usage vs Cannabis usage", 
+                plot_width = 10, 
+                plot_height = 5)
+```
+
+
+#### 2. Build a scatter plot with `scatterplot()`
+
+`scatterplot` is a function that takes the specified variables as inputs and then it creates
+a histogram with the given plot title, x-axis label, y-axis label and color legend label.
+The plot width and height can also be changed according to user preference.
+
+`data` argument is the input data frame to be plotted, `x_var`argument is the name of the
+variable to be plotted on the x-axis, `y_var` argument is  the name of the variable to be
+plotted on the y-axis, `color_var` argument is the name of the variable to be used for color
+coding,  `x_label` arguemt is the label for the x-axis, `y_label` argument is the label for 
+the y-axis, `color_label` argument is the label for the color legend, `plot_title` arguement
+is the title for the plot, `plot_width` argument is the width of the plot, `plot_height` 
+argument is the height of the plot.
+
+For example, we can use `scatterplot` function by providing `data = example_data`(it is hidden
+in the code for this example), `x_var = Oscore`, `y_var = rate`, `color_var = Nicotine`,
+`x_label = "Openness"`, `y_label = "Percentage of People Who Use Cannabis"`,
+`color_label = "Use Nicotine"` , `plot_title = "Openness vs. Cannabis use"`, 
+`plot_width = 9`, and `plot_height = 7`. This will create a scatterplot as it 
+can be seen below.
+
+```{r example_data, include=FALSE}
+library(tidyr)
+example_data <- group_by(train_data, Oscore, Nicotine, Cannabis) %>%
+               summarize(n = n()) %>%
+               pivot_wider(names_from = Cannabis, values_from = n) %>%
+               replace(is.na(.), 0) %>%  # To make sure 0s don't get read as NAs
+               mutate(total = yes + no) %>%  # To find rate
+               mutate(rate = yes / total * 100)
+```
+ 
+```{r scatterplot, out.height=600, out.width=500, fig.height = 10, fig.width = 8, fig.align = "center"}
+scatterplot(example_data, Oscore, rate, Nicotine, "Openness", "Percentage of People Who Use Cannabis", 
+"Use Nicotine", "Openness vs. Cannabis use", plot_width = 9, plot_height = 7)
+```
+
+#### 3. Build a plot to help understand the accuracies with `accuracy_plot()`
+
+`accuracy_plot()` is a function that builds a line plot to help understand the 
+accuracies of a KNN model with different numbers of neighbors. The function takes
+four arguments: workflow_data, which is a data frame containing the KNN workflow
+data and accuracies, x_label, which is the name given to the x axis, y_label, 
+which is the name given to the y axis, and plot_title, which is the name given to
+the entire graph.
+
+The function first filters the workflow_data for the accuracy metric, selecting 
+only the rows that correspond to the accuracy values for the different numbers 
+of neighbors.
+
+Next, the function builds the line plot using ggplot() from the ggplot2 package.
+The x-axis represents the number of neighbors and the y-axis represents the mean
+accuracy. The plot includes points and a line connecting them.
+
+The function uses `labs()` to set the x and y axis labels and the title of the plot
+using the x_label, y_label, and plot_title arguments, respectively. The function
+also sets the size of the text elements in the plot using `theme()`.
+
+Finally, the function returns the line plot as an object of class ggplot.The size 
+of the plot is set using the `options()` function.
+
+For example, if you had a KNN workflow data called drugs_workflow, you could use
+the following code to build a line plot depicting the relationship between the 
+number of neighbors and the accuracy of the estimates and label the axes and the
+plot with the given labels:
+
+```{r drugs_workflow, include=FALSE}
+drugs_workflow <- workflow() %>%
+  add_recipe(drugs_recipe) %>%
+  add_model(drugs_knn_spec) %>%
+  tune_grid(resamples = drugs_vfold, grid = drugs_grid) %>%
+  collect_metrics()
+```
+
+
+```{r acc_plot, out.height=200, out.width=700, fig.height = 3, fig.width = 10, fig.align = "left"}
+acc_plot <- accuracy_plot(drugs_workflow,
+  x_label = "Number of Neighbors",
+  y_label = "Accuracy Estimate",
+  plot_title = "Neighbors vs. Accuracy"
+)
+acc_plot
 ```

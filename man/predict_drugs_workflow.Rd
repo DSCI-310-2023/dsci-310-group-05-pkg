@@ -22,5 +22,17 @@ the outcome of a target variable for the test data using the KNN model.
 The predicted outcome is then written to the data folder.
 }
 \examples{
-predict_drugs_workflow(drugs_workflow, drugs_test)
+test_data <- data.frame(
+  X1 = c(0.5, 0.1, 0.7),
+  X2 = c(0.9, 0.3, 0.6),
+  X3 = c(0.2, 0.4, 0.8)
+  )
+
+knn_workflow <- data.frame(
+ .metric = rep("accuracy", 30),
+ neighbors = 1:30,
+ mean = rnorm(30)
+ )
+
+predict_drugs_workflow(knn_workflow, test_data)
 }

@@ -47,7 +47,7 @@
 #'
 #' predict_drugs_workflow(mock_knn_wf, test_data)
 
-predict_drugs_workflow <- function(knn_wf, test_data = testing_data) {
+predict_drugs_workflow <- function(knn_wf, test_data) {
   if (is.null(knn_wf)) {
     stop("The knn_wf input cannot be null.")
   }

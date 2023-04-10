@@ -11,7 +11,16 @@
 #'                  predictor for the algorithm
 #'
 #' @return a list containing the training and the testing data sets
-#' @example split_dataset(drugs, Cannabis, Nicotine)
+#' @examples
+#' data_set <- data.frame(
+#' x = rnorm(100),
+#' y = sample(c("A", "B", "C"), 100, replace = TRUE),
+#' z = rnorm(100)
+#' )
+#' strata_variable <- "y"
+#' predictor <- "x"
+#'
+#' split_dataset(data_set, strata_variable, predictor)
 #'
 #' @import rsample
 #' @export

@@ -34,7 +34,7 @@ horizontal_hist <- function(data, x_var, y_var, x_label, y_label, plot_title,
   options(repr.plot.width = plot_width, repr.plot.height = plot_height)
 
   plot <- ggplot(data, aes(
-    x = reorder({{ x_var }}, -{{ y_var }}),
+    x = reorder({{ x_var }}, {{ y_var }}),
     y = {{ y_var }}
   )) +
     geom_bar(stat = "identity") +

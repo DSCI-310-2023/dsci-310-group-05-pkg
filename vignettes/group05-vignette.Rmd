@@ -48,6 +48,8 @@ set has `1884 rows` and `32 columns`.
 ```{r setup, include = FALSE}
 library(group05pkg)
 library(dplyr)
+library(stringr)
+library(forcats)
 ```
 
 ```{r drug-consumption}
@@ -65,6 +67,37 @@ colnames(drug_consumption) <- c(
 head(drug_consumption)
 ```
 
+```{r data-cleaning-1, include = FALSE}
+drug_consumption <- select(
+  drug_consumption, Age, Gender, Nscore, Escore, Oscore, Ascore, Nicotine,
+  Cannabis
+) %>%
+  mutate(Cannabis = str_replace_all(
+    Cannabis,
+    c(
+      "CL0" = "no",
+      "CL1" = "no",
+      "CL2" = "no",
+      "CL3" = "yes",
+      "CL4" = "yes",
+      "CL5" = "yes",
+      "CL6" = "yes"
+    )
+  )) %>%
+  mutate(Cannabis = as_factor(Cannabis)) %>%
+  mutate(Nicotine = str_replace_all(
+    Nicotine,
+    c(
+      "CL0" = "no",
+      "CL1" = "no",
+      "CL2" = "no",
+      "CL3" = "yes",
+      "CL4" = "yes",
+      "CL5" = "yes",
+      "CL6" = "yes"
+    )
+  ))
+```
 ## Functions
 
 We can break down our functions into 3 different groups: 
@@ -89,7 +122,19 @@ For example, we can use `split_dataset()` function by providing `data_set = drug
 split_data <- split_dataset(drug_consumption, "Cannabis", "Nicotine")
 train_data <- split_data[[1]]
 test_data<- split_data[[2]]
+```
 
+```{r data-cleaning-2, include=FALSE}
+test_data <- mutate(test_data,
+  Nicotine = str_replace_all(
+    Nicotine,
+    c(
+      "no" = "0",
+      "yes" = "1"
+    )
+  )
+) %>%
+  mutate(Nicotine = as.numeric(Nicotine))
 ```
 
 #### 2. Clean and wrangle data
@@ -102,8 +147,13 @@ The function groups the training data by the predictor and strata variable, summ
 
 
 ```{r wrangle_training_data}
-labels<-c("Neither", "Cannabis only", "Nicotine only", "Both")
-wrangle_training_data(train_data, "Cannabis", "Nicotine", labels)
+labels <- c("Neither", "Cannabis only", "Nicotine only", "Both")
+cannabis_and_nicotine <- wrangle_training_data(
+  train_data,
+  Nicotine, 
+  Cannabis,
+  labels
+)
 ```
 
 ### Visualizations
@@ -162,7 +212,7 @@ object for the drug_consumption dataframe with the response variable set to "Can
 you can use the following code:
 
 ```{r create-recipe}
-drugs_recipe <- create_recipe(data = drug_consumption, response_var = "Cannabis")
+drugs_recipe <- create_recipe(data = train_data, response_var = "Cannabis")
 drugs_recipe
 ```
 #### 3. Create vfold with `create_vfold()`
@@ -181,7 +231,8 @@ For example, if you wanted to create a v-fold cross-validation object with 5 fol
 and stratified by the "Cannabis" variable, you can use the following code:
 
 ```{r create-vfold}
-drugs_vfold <- create_vfold(drug_consumption, 5, "Cannabis")
+drugs_vfold <- create_vfold(train_data, 5, "Cannabis")
+drugs_vfold
 ```
 
 #### 4. Create grid with `create_grid()`
@@ -204,6 +255,7 @@ you can use the following code:
 
 ```{r create-grid}
 drugs_grid <- create_grid(1, 30)
+drugs_grid
 ```
 
 #### 5. Predict Accuracy of Workflow with `predict_drugs_workflow`
@@ -227,3 +279,21 @@ For example, if you had a fitted KNN workflow object called drugs_workflow and a
 data frame of new test data called test_data, you could use the following code to
 predict the outcome of cannabis usage for the new test data and write the predicted
 outcome to the data folder:
+
+```{r predict_drugs_workflow}
+drugs_real_spec <- nearest_neighbor(
+  weight_func = "rectangular",
+  neighbors = 23
+) %>%
+  set_engine("kknn") %>%
+  set_mode("classification")
+
+drugs_real_workflow <- workflow() %>%
+  add_recipe(drugs_recipe) %>%
+  add_model(drugs_real_spec) %>%
+  fit(data = test_data)
+
+# calculating how well the training data predicts the testing data
+drugs_pred <- predict_drugs_workflow(drugs_real_workflow, test_data)
+drugs_pred
+```

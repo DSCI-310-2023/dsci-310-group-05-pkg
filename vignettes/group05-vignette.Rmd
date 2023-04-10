@@ -71,6 +71,45 @@ We can break down our functions into 3 different groups:
 - Visualizations
 - Classification Models
 
+### EDA
+
+#### 1. Split the dataset into training and testing sets 
+
+The `split_dataset` is a function that splits a dataset into training and test sets. The function takes in a dataset, a strata variable, and a predictor variable as inputs and performs a stratified random split of the dataset into training and testing subsets.
+
+`data_set` argument is a data frame containing the original data that will be split into training and testing sets. `strata_variable` is a string specifying the variable in `data_set` that will be used as a stratification variable for the split. `predictor` is a string that indicates the variable in the `data_set` that is going to be considered as the predictor variable.
+
+The function returns a list that contains the training set and testing set. 
+
+For example, we can use `split_dataset()` function by providing `data_set = drug_consumption`, `strata_dariable = "Canabis"` and `predictor = "Nicotine"`. This will split our `drug_consumption` into train and test sets.
+
+```{r split_dataset}
+split_data <- split_dataset(drug_consumption, "Cannabis", "Nicotine")
+train_data <- split_data[[1]]
+test_data<- split_data[[2]]
+
+```
+
+#### 2. Clean and wrangle data
+
+The `wrangle_training_data` function takes in a training dataset, a predictor variable, a strata variable, and group labels as inputs, and returns a data frame with 4 columns that are named as "predictor", "strata_variable", "n", and "label". 
+
+The function groups the training data by the predictor and strata variable, summarizes the number of observations in each group, and lastly  adds a label column with group labels that are defined by the user.
+
+`training_data` argument is a data frame that contains the training data that is going to be wrangled and cleaned. `predictor` argument is a string or that spcifies the variable in the training data that is gonna be used as the predictor variable. `strata_variable` is a string that specifies the variable in the training data to be used as the stratification variable.`group_labels` is a strings to be used as labels for the groups in the resulting data frame.
+
+
+```{r wrangle_training_data}
+labels<-c("Neither", "Cannabis only", "Nicotine only", "Both")
+wrangle_training_data(train_data, "Cannabis", "Nicotine", labels)
+```
+
+### Visualizations
+
+
+
+
+
 ### Classification Models 
 
 #### 1. Create knn specification with `create_knn_spec()`

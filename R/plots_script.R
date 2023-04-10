@@ -103,7 +103,7 @@ scatterplot <- function(data, x_var, y_var, color_var, x_label, y_label,
 #' @return a visualization of the accuracy of the estimates with respect to
 #' the number of neighbors
 #'
-#' @examples accuracy_plot(workflow_data, "Neighbors", "Accuracy", "Accuracy Plot for mtcars Dataset")
+#' @example accuracy_plot(mock_knn_wf, "Neighbors", "Accuracy", "Accuracy Plot for Mock KNN")
 #'
 #' @import tidyverse ggplot2 tidymodels dplyr recipes rsample tune magrittr kknn
 #' @export

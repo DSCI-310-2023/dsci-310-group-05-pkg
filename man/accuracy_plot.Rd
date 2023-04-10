@@ -24,7 +24,3 @@ Creates a line plot depicting the relationship between two variables,
 one of them being the accuracy
 naming the axes and the plot with the given labels,
 }
-\examples{
-accuracy_plot(workflow_data, "Neighbors", "Accuracy", "Accuracy Plot for mtcars Dataset")
-
-}

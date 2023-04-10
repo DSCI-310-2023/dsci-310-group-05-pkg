@@ -20,4 +20,5 @@ modeling workflow.
 }
 \examples{
 create_knn_spec("rectangular")
+
 }

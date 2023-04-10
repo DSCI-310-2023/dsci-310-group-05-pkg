@@ -9,6 +9,9 @@
 #' cannabis usage
 #' @return Writes the predicted outcome of cannabis usage for the new data in
 #' the data folder
+#' @import workflows
+#' @importFrom stats predict
+#' @importFrom dplyr bind_cols
 #' @export
 #'
 #' @examples

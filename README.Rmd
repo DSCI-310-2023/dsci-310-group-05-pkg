@@ -16,10 +16,18 @@ knitr::opts_chunk$set(
 # group05pkg
 
 <!-- badges: start -->
+[![codecov](https://codecov.io/github/DaliaAh/dsci-310-group-05-pkg/branch/main/graph/badge.svg)](https://app.codecov.io/github/DaliaAh/dsci-310-group-05-pkg)
+
+[![R-CMD-check](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml)
+
 <!-- badges: end -->
 
 The goal of group05pkg is to aid in creating a classification analysis project
 end to end. It includes functions that create training and test sets, clean the data, plot the data, create specification, recipe and v-fold cross-validation objects to use in a  classification model.
+
+## Package Website
+
+You can visit the package website [here](https://daliaah.github.io/dsci-310-group-05-pkg/).
 
 ## Installation
 
@@ -51,7 +59,6 @@ library(group05pkg)
 1. Using `split_dataset` you can split a dataset into training and testing sets based on a strata variable. Here we use `iris` dataset.
 
 ```{r split_dataset, echo=TRUE, error=FALSE, message=FALSE, warning=FALSE}
-
 result<-split_dataset(iris, "Species", "Sepal.Length")
 training_set <- result[[1]]
 test_set <- result[[2]]
@@ -65,7 +72,6 @@ dim(test_set)
 2. Using `wrangle_training_data()`, you can  group training data by predictor and strata_variables and add a group_labels column. Here we are using a dummy training data to pass into our function.
 
 ```{r wrangle_training_data, echo=TRUE, error=FALSE, message=FALSE, warning=FALSE}
-
 # Given a dummy training  data called training_data
 training_data <- data.frame(
   col1 = c("yes", "no", "yes", "no"),
@@ -86,7 +92,6 @@ horizontal_hist(mtcars, cyl, disp, "cyl",
    "disp", "cyl vs disp",
    plot_width = 2, plot_height = 3
  )
-
 ```
 
 4. Using `scatterplot` function we can build a scatter plot to help understand the relationship between two variables. Here we are using `mtcars` dataset.
@@ -122,11 +127,4 @@ Thank you for taking the time to contribute to the `group05pkg`! We welcome cont
 
 
 ## License
-This project is offered under the [Attribution 4.0 International (CC BY 4.0) License](https://creativecommons.org/licenses/by/4.0/) and created by ,,,,. The software provided in this project is offered under the [MIT open source license](https://opensource.org/license/mit/) . See the [license file](/LICENSE.md) for more information.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+This project is offered under the [Attribution 4.0 International (CC BY 4.0) License](https://creativecommons.org/licenses/by/4.0/). The software provided in this project is offered under the [MIT open source license](https://opensource.org/license/mit/) . See the [license file](https://github.com/DaliaAh/dsci-310-group-05-pkg/blob/main/LICENSE.md) for more information.

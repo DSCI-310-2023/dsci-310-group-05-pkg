@@ -14,14 +14,19 @@
 #' @param plot_width Width of the plot
 #' @param plot_height Height of the plot
 #'
-#' @return  a visualization of a horizontal histogram
+#' @return a visualization of a horizontal histogram
 #'
-#' @examples horizontal_hist(cannabis_and_nicotine, label, n, "",
-#'   "Amount of participants", "Nicotine usage vs. Cannabis usage",
-#'   plot_width = 8, plot_height = 6
+#' @examples
+#' test_data_1 <- data.frame(
+#' x = c(1, 2, 3, 4), y = c(10, 20, 30, 40),
+#' color = c("red", "blue", "green", "red")
 #' )
 #'
+#' horizontal_hist(test_data_1, "x", "y", "x", "y", "Test Plot",
+#' plot_width = 6, plot_height = 4)
+#'
 #' @import tidyverse ggplot2
+#' @importFrom stats reorder
 #' @export
 
 
@@ -30,7 +35,7 @@ horizontal_hist <- function(data, x_var, y_var, x_label, y_label, plot_title,
   options(repr.plot.width = plot_width, repr.plot.height = plot_height)
 
   plot <- ggplot(data, aes(
-    x = reorder({{ x_var }}, -{{ y_var }}),
+    x = stats::reorder({{ x_var }}, {{ y_var }}),
     y = {{ y_var }}
   )) +
     geom_bar(stat = "identity") +
@@ -64,11 +69,14 @@ horizontal_hist <- function(data, x_var, y_var, x_label, y_label, plot_title,
 #'
 #' @return a visualization of a scatter plot
 #'
-#' @examples scatterplot(OpenNicWeed, Oscore, rate, Nicotine, "Openness",
-#'   "Percentage of People Who Use Cannabis", "Use Nicotine",
-#'   "Openness vs. Cannabis use",
-#'   plot_width = 9, plot_height = 7
+#' @examples
+#' test_data_1 <- data.frame(
+#' x = c(1, 2, 3, 4), y = c(10, 20, 30, 40),
+#' color = c("red", "blue", "green", "red")
 #' )
+#'
+#' scatterplot(test_data_1, "x", "y", "color", "x", "y", "Color",
+#' "Test Plot", plot_width = 6, plot_height = 4)
 #'
 #' @import tidyverse ggplot2
 #' @export
@@ -103,20 +111,27 @@ scatterplot <- function(data, x_var, y_var, color_var, x_label, y_label,
 #' @return a visualization of the accuracy of the estimates with respect to
 #' the number of neighbors
 #'
-#' @examples accuracy_plot(workflow_data, "Neighbors", "Accuracy", "Accuracy Plot for mtcars Dataset")
+#' @examples
+#' test_data_2 <- data.frame(
+#'  .metric = rep("accuracy", 30),
+#'  neighbors = 1:30,
+#'  mean = rnorm(30)
+#'  )
 #'
-#' @import tidyverse ggplot2 tidymodels dplyr recipes rsample tune magrittr kknn
+#' accuracy_plot(test_data_2, "Neighbors", "Accuracy", "Accuracy Plot for Test Data 2")
+#'
+#' @import tidyverse ggplot2 tidymodels rsample tune magrittr kknn
+#' @importFrom dplyr filter
 #' @export
 
 accuracy_plot <- function(workflow_data, x_label, y_label, plot_title) {
+  .metric <- metric <- neighbors <- NULL
   options(repr.plot.width = 12, repr.plot.width = 12)
 
   names_list <- names(workflow_data)
 
   if (".metric" %in% names_list) {
     accuracy <- dplyr::filter(workflow_data, .metric == "accuracy")
-  } else {
-    accuracy <- dplyr::filter(workflow_data, metric == "accuracy")
   }
 
   acc_plot <- ggplot(accuracy, aes(x = neighbors, y = mean)) +

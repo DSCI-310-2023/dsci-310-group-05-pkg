@@ -7,6 +7,8 @@ Authors@R:
     person("Dalia", "Ahmad", email = "ahmaddalia708@gmail.com", 
            role = c("aut")),
     person("Ece", "Celik", email = "ece01celik@gmail.com", 
+           role = c("aut")),
+    person("Rithika", "Nair", email = "rrithikanair@gmail.com", 
            role = c("aut")))
 Description: This package further abstracts the functions used by group 5
              in their analysis. It contains data loading, cleaning and wrangling
@@ -29,5 +31,13 @@ Imports:
     workflows,
     kknn
 Suggests: 
+    knitr,
+    tidyr,
+    rmarkdown,
+    devtools,
+    readr,
+    forcats,
+    stringr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: knitr

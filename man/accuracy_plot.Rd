@@ -25,6 +25,12 @@ one of them being the accuracy
 naming the axes and the plot with the given labels,
 }
 \examples{
-accuracy_plot(workflow_data, "Neighbors", "Accuracy", "Accuracy Plot for mtcars Dataset")
+test_data_2 <- data.frame(
+ .metric = rep("accuracy", 30),
+ neighbors = 1:30,
+ mean = rnorm(30)
+ )
+
+accuracy_plot(test_data_2, "Neighbors", "Accuracy", "Accuracy Plot for Test Data 2")
 
 }

@@ -25,6 +25,10 @@ knitr::opts_chunk$set(
 The goal of group05pkg is to aid in creating a classification analysis project
 end to end. It includes functions that create training and test sets, clean the data, plot the data, create specification, recipe and v-fold cross-validation objects to use in a  classification model.
 
+## Package Website
+
+You can visit the package website [here](https://daliaah.github.io/dsci-310-group-05-pkg/).
+
 ## Installation
 
 You can install the development version of group05pkg from [GitHub](https://github.com/DaliaAh/dsci-310-group-05-pkg) with:
@@ -123,5 +127,5 @@ Thank you for taking the time to contribute to the `group05pkg`! We welcome cont
 
 
 ## License
-This project is offered under the [Attribution 4.0 International (CC BY 4.0) License](https://creativecommons.org/licenses/by/4.0/). The software provided in this project is offered under the [MIT open source license](https://opensource.org/license/mit/) . See the [license file](/LICENSE.md) for more information.
+This project is offered under the [Attribution 4.0 International (CC BY 4.0) License](https://creativecommons.org/licenses/by/4.0/). The software provided in this project is offered under the [MIT open source license](https://opensource.org/license/mit/) . See the [license file](https://github.com/DaliaAh/dsci-310-group-05-pkg/blob/main/LICENSE.md) for more information.
 

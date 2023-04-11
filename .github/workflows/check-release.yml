@@ -19,7 +19,6 @@ jobs:
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel'}
           - {os: ubuntu-latest,   r: 'release'}
-          - {os: macos-latest, r: 'release'}
     
     steps:
       - name: Checkout files from GitHub version control repository

@@ -132,8 +132,6 @@ accuracy_plot <- function(workflow_data, x_label, y_label, plot_title) {
 
   if (".metric" %in% names_list) {
     accuracy <- dplyr::filter(workflow_data, .metric == "accuracy")
-  } else {
-    accuracy <- dplyr::filter(workflow_data, metric == "accuracy")
   }
 
   acc_plot <- ggplot(accuracy, aes(x = neighbors, y = mean)) +

@@ -19,7 +19,7 @@ v-fold cross-validation objects to use in a classification model.
 ## Package Website
 
 You can visit the package website
-[here](https://daliaah.github.io/dsci-310-group-05-pkg/).
+[here](https://dsci-310.github.io/dsci-310-group-05-pkg/).
 
 ## Installation
 
@@ -61,21 +61,21 @@ head(training_set)
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 #> 1          5.1         3.5          1.4         0.2  setosa
 #> 2          4.9         3.0          1.4         0.2  setosa
-#> 3          4.7         3.2          1.3         0.2  setosa
 #> 4          4.6         3.1          1.5         0.2  setosa
 #> 5          5.0         3.6          1.4         0.2  setosa
-#> 7          4.6         3.4          1.4         0.3  setosa
+#> 6          5.4         3.9          1.7         0.4  setosa
+#> 9          4.4         2.9          1.4         0.2  setosa
 dim(training_set)
 #> [1] 111   5
 
 head(test_set)
 #>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-#> 6           5.4         3.9          1.7         0.4  setosa
-#> 10          4.9         3.1          1.5         0.1  setosa
-#> 13          4.8         3.0          1.4         0.1  setosa
-#> 16          5.7         4.4          1.5         0.4  setosa
+#> 3           4.7         3.2          1.3         0.2  setosa
+#> 7           4.6         3.4          1.4         0.3  setosa
+#> 8           5.0         3.4          1.5         0.2  setosa
 #> 18          5.1         3.5          1.4         0.3  setosa
-#> 27          5.0         3.4          1.6         0.4  setosa
+#> 19          5.7         3.8          1.7         0.3  setosa
+#> 20          5.1         3.8          1.5         0.3  setosa
 dim(test_set)
 #> [1] 39  5
 ```

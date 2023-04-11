@@ -27,7 +27,7 @@ end to end. It includes functions that create training and test sets, clean the 
 
 ## Package Website
 
-You can visit the package website [here](https://daliaah.github.io/dsci-310-group-05-pkg/).
+You can visit the package website [here](https://dsci-310.github.io/dsci-310-group-05-pkg/).
 
 ## Installation
 

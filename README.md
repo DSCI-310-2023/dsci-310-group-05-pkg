@@ -6,8 +6,8 @@
 <!-- badges: start -->
 
 [![codecov](https://codecov.io/github/DaliaAh/dsci-310-group-05-pkg/branch/main/graph/badge.svg)](https://app.codecov.io/github/DaliaAh/dsci-310-group-05-pkg)
-
-[![R-CMD-check](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml)
+[![test-coverage](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml)
+[![R-CMD-CHECK](https://github.com/DaliaAh/dsci-310-group-05-pkg/workflows/R-CMD-check/badge.svg)](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/check-release.yaml)
 
 <!-- badges: end -->
 
@@ -62,19 +62,19 @@ head(training_set)
 #> 1          5.1         3.5          1.4         0.2  setosa
 #> 2          4.9         3.0          1.4         0.2  setosa
 #> 3          4.7         3.2          1.3         0.2  setosa
+#> 4          4.6         3.1          1.5         0.2  setosa
 #> 5          5.0         3.6          1.4         0.2  setosa
-#> 6          5.4         3.9          1.7         0.4  setosa
 #> 7          4.6         3.4          1.4         0.3  setosa
 dim(training_set)
 #> [1] 111   5
 
 head(test_set)
 #>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-#> 4           4.6         3.1          1.5         0.2  setosa
+#> 6           5.4         3.9          1.7         0.4  setosa
 #> 10          4.9         3.1          1.5         0.1  setosa
-#> 15          5.8         4.0          1.2         0.2  setosa
-#> 20          5.1         3.8          1.5         0.3  setosa
-#> 25          4.8         3.4          1.9         0.2  setosa
+#> 13          4.8         3.0          1.4         0.1  setosa
+#> 16          5.7         4.4          1.5         0.4  setosa
+#> 18          5.1         3.5          1.4         0.3  setosa
 #> 27          5.0         3.4          1.6         0.4  setosa
 dim(test_set)
 #> [1] 39  5

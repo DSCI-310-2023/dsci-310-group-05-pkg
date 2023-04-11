@@ -33,7 +33,7 @@ You can visit the package website [here](https://daliaah.github.io/dsci-310-grou
 
 You can install the development version of group05pkg from [GitHub](https://github.com/DaliaAh/dsci-310-group-05-pkg) with:
 
-``` r
+```{r example}
 install.packages("devtools")
 devtools::install_github("DaliaAh/dsci-310-group-05-pkg")
 ```

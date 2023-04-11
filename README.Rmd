@@ -17,8 +17,8 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![codecov](https://codecov.io/github/DaliaAh/dsci-310-group-05-pkg/branch/main/graph/badge.svg)](https://app.codecov.io/github/DaliaAh/dsci-310-group-05-pkg)
-
-[![R-CMD-check](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml)
+[![test-coverage](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml)
+[![R-CMD-CHECK](https://github.com/DaliaAh/dsci-310-group-05-pkg/workflows/R-CMD-check/badge.svg)](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/check-release.yaml)
 
 <!-- badges: end -->
 
@@ -51,10 +51,6 @@ devtools::install_github("DaliaAh/dsci-310-group-05-pkg")
 ## Examples
 
 Here are some basic examples that show how to use the functions in this package:
-
-```{r example}
-library(group05pkg)
-```
 
 1. Using `split_dataset` you can split a dataset into training and testing sets based on a strata variable. Here we use `iris` dataset.
 

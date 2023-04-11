@@ -34,7 +34,7 @@ You can visit the package website [here](https://daliaah.github.io/dsci-310-grou
 You can install the development version of group05pkg from [GitHub](https://github.com/DaliaAh/dsci-310-group-05-pkg) with:
 
 ```{r install}
-install.packages("devtools")
+# install.packages("devtools")
 devtools::install_github("DaliaAh/dsci-310-group-05-pkg")
 ```
 
@@ -54,7 +54,7 @@ Here are some basic examples that show how to use the functions in this package:
 
 
 ```{r example}
-library(group5pkg)
+library(group05pkg)
 ```
 
 1. Using `split_dataset` you can split a dataset into training and testing sets based on a strata variable. Here we use `iris` dataset.

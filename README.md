@@ -4,6 +4,11 @@
 # group05pkg
 
 <!-- badges: start -->
+
+[![codecov](https://codecov.io/github/DaliaAh/dsci-310-group-05-pkg/branch/main/graph/badge.svg)](https://app.codecov.io/github/DaliaAh/dsci-310-group-05-pkg)
+
+[![R-CMD-check](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/DaliaAh/dsci-310-group-05-pkg/actions/workflows/test-coverage.yaml)
+
 <!-- badges: end -->
 
 The goal of group05pkg is to aid in creating a classification analysis
@@ -44,29 +49,28 @@ library(group05pkg)
     testing sets based on a strata variable. Here we use `iris` dataset.
 
 ``` r
-
 result<-split_dataset(iris, "Species", "Sepal.Length")
 training_set <- result[[1]]
 test_set <- result[[2]]
 head(training_set)
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-#> 1          5.1         3.5          1.4         0.2  setosa
-#> 2          4.9         3.0          1.4         0.2  setosa
-#> 4          4.6         3.1          1.5         0.2  setosa
+#> 3          4.7         3.2          1.3         0.2  setosa
 #> 5          5.0         3.6          1.4         0.2  setosa
 #> 6          5.4         3.9          1.7         0.4  setosa
 #> 7          4.6         3.4          1.4         0.3  setosa
+#> 8          5.0         3.4          1.5         0.2  setosa
+#> 9          4.4         2.9          1.4         0.2  setosa
 dim(training_set)
 #> [1] 111   5
 
 head(test_set)
 #>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-#> 3           4.7         3.2          1.3         0.2  setosa
-#> 8           5.0         3.4          1.5         0.2  setosa
-#> 12          4.8         3.4          1.6         0.2  setosa
-#> 16          5.7         4.4          1.5         0.4  setosa
-#> 18          5.1         3.5          1.4         0.3  setosa
-#> 25          4.8         3.4          1.9         0.2  setosa
+#> 1           5.1         3.5          1.4         0.2  setosa
+#> 2           4.9         3.0          1.4         0.2  setosa
+#> 4           4.6         3.1          1.5         0.2  setosa
+#> 13          4.8         3.0          1.4         0.1  setosa
+#> 17          5.4         3.9          1.3         0.4  setosa
+#> 24          5.1         3.3          1.7         0.5  setosa
 dim(test_set)
 #> [1] 39  5
 ```
@@ -76,7 +80,6 @@ dim(test_set)
     we are using a dummy training data to pass into our function.
 
 ``` r
-
 # Given a dummy training  data called training_data
 training_data <- data.frame(
   col1 = c("yes", "no", "yes", "no"),
@@ -145,18 +148,6 @@ create_knn_spec("rectangular")
 
 ``` r
 create_recipe(iris, "Species")
-#> Recipe
-#> 
-#> Inputs:
-#> 
-#>       role #variables
-#>    outcome          1
-#>  predictor          4
-#> 
-#> Operations:
-#> 
-#> Scaling for all_predictors()
-#> Centering for all_predictors()
 ```
 
 7.  Using `create_vfold` we can create a v-fold cross-validation object
@@ -191,26 +182,7 @@ for more information.
 ## License
 
 This project is offered under the [Attribution 4.0 International (CC BY
-4.0) License](https://creativecommons.org/licenses/by/4.0/) and created
-by ,,,,. The software provided in this project is offered under the [MIT
-open source license](https://opensource.org/license/mit/) . See the
-[license file](/LICENSE.md) for more information.
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the
-“Software”), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+4.0) License](https://creativecommons.org/licenses/by/4.0/). The
+software provided in this project is offered under the [MIT open source
+license](https://opensource.org/license/mit/) . See the [license
+file](/LICENSE.md) for more information.

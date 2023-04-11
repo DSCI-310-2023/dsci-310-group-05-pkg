@@ -59,23 +59,23 @@ training_set <- result[[1]]
 test_set <- result[[2]]
 head(training_set)
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+#> 1          5.1         3.5          1.4         0.2  setosa
+#> 2          4.9         3.0          1.4         0.2  setosa
 #> 3          4.7         3.2          1.3         0.2  setosa
-#> 4          4.6         3.1          1.5         0.2  setosa
 #> 5          5.0         3.6          1.4         0.2  setosa
+#> 6          5.4         3.9          1.7         0.4  setosa
 #> 7          4.6         3.4          1.4         0.3  setosa
-#> 8          5.0         3.4          1.5         0.2  setosa
-#> 9          4.4         2.9          1.4         0.2  setosa
 dim(training_set)
 #> [1] 111   5
 
 head(test_set)
 #>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-#> 1           5.1         3.5          1.4         0.2  setosa
-#> 2           4.9         3.0          1.4         0.2  setosa
-#> 6           5.4         3.9          1.7         0.4  setosa
-#> 12          4.8         3.4          1.6         0.2  setosa
-#> 13          4.8         3.0          1.4         0.1  setosa
-#> 14          4.3         3.0          1.1         0.1  setosa
+#> 4           4.6         3.1          1.5         0.2  setosa
+#> 10          4.9         3.1          1.5         0.1  setosa
+#> 15          5.8         4.0          1.2         0.2  setosa
+#> 20          5.1         3.8          1.5         0.3  setosa
+#> 25          4.8         3.4          1.9         0.2  setosa
+#> 27          5.0         3.4          1.6         0.4  setosa
 dim(test_set)
 #> [1] 39  5
 ```

@@ -1,5 +1,5 @@
 Package: group05pkg
-Title: Increasign reproducibility of group 5's DSCI 310 project
+Title: Increasing reproducibility of group 5's DSCI 310 project
 Version: 0.0.0.9000
 Authors@R: 
     c(person("Angela", "Machado", email = "angelalopesmachado@gmail.com", 

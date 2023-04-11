@@ -53,7 +53,7 @@ devtools::install_github("DaliaAh/dsci-310-group-05-pkg")
 Here are some basic examples that show how to use the functions in this package:
 
 
-```{r example}
+```r
 library(group05pkg)
 ```
 

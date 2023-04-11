@@ -19,7 +19,8 @@ test_that("predict_drugs_workflow() returns a dataframe", {
 # Test case 5
 test_that("predict_drugs_workflow() handles non-data frame test_data
           input correctly", {
-            expect_error(predict_drugs_workflow(drugs_workflow, not_dataframe))
+            expect_error(predict_drugs_workflow(mock_knn_wf, not_dataframe),
+                         "The test data input must be a dataframe.")
           })
 
 # Test case 6
